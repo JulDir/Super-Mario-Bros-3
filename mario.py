@@ -10,23 +10,23 @@ premiere_maj = True
 
 ### Sprites
 
-mario1_ = pygame.image.load('images/mario1.png')
-mario2_ = pygame.image.load('images/mario2.png')
-mario_jump_ = pygame.image.load('images/mario_jump.png')
+mario1_     = pygame.image.load('images/mario1.png')
+mario2_     = pygame.image.load('images/mario2.png')
+mario_saute_ = pygame.image.load('images/mario_jump.png')
 
-mario1g = pygame.transform.scale(mario1_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
-mario2g = pygame.transform.scale(mario2_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
-mario_jumpg = pygame.transform.scale(mario_jump_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
+mario1g      = pygame.transform.scale(mario1_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
+mario2g      = pygame.transform.scale(mario2_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
+mario_sauteg = pygame.transform.scale(mario_saute_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
 
-mario1d = pygame.transform.flip(mario1g, True, False)
-mario2d = pygame.transform.flip(mario2g, True, False)
-mariojumpd = pygame.transform.flip(mario_jumpg, True, False)
+mario1d      = pygame.transform.flip(mario1g, True, False)
+mario2d      = pygame.transform.flip(mario2g, True, False)
+mario_sauted = pygame.transform.flip(mario_sauteg, True, False)
 
 SPRITES_MARCHE_GAUCHE_PETIT = [mario1g, mario2g]
 SPRITES_MARCHE_DROITE_PETIT = [mario1d, mario2d]
 SPRITES_MARCHE_PETIT = [SPRITES_MARCHE_GAUCHE_PETIT, SPRITES_MARCHE_DROITE_PETIT]
 
-SPRITES_SAUT_PETIT = [[mario_jumpg], [mariojumpd]]
+SPRITES_SAUT_PETIT = [[mario_sauteg], [mario_sauted]]
 
 ### Fonctions
 
@@ -86,7 +86,7 @@ def mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_direction
     saute = touches[APPUIE_SAUT]
 
     # initialiser acceleration
-    acceleration = np.array([0.0, 0.0])
+    acceleration = np.zeros(2)
     print(f'avant calculs {acceleration, vitesse, position}')
 
     # gestion sauts & deplacements verticaux

@@ -1,5 +1,6 @@
 import pygame
 import mario
+import objet
 from constantes import *
 from couleurs import *
 
@@ -48,3 +49,10 @@ def dessiner_decors(fenetre, niveau, position_camera):
 def dessiner_mario(fenetre, position_camera):
     rect = rect_fenetre(mario.position, TAILLE_MARIO[mario.etat], position_camera)
     fenetre.blit(mario.sprite(), rect)
+
+
+def dessiner_objets(fenetre, position_camera):
+    for obj in objet.liste_objets:
+        if obj[CHARGE]:
+            rect = rect_fenetre(obj[POSITION], TAILLE_OBJET[obj[TYPE]], position_camera)
+            fenetre.blit(objet.sprite(obj), rect)

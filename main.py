@@ -1,6 +1,7 @@
 import pygame
 import affichage
 import mario
+import objet
 from niveaux import Niveau
 from constantes import *
 
@@ -56,6 +57,9 @@ fenetre = pygame.display.set_mode(affichage.TAILLE_FENETRE)
 fini = False
 horloge = pygame.time.Clock()
 
+champ = False
+temps_champ = 5
+
 niveau = Niveau()
 
 #--- Boucle principale
@@ -64,8 +68,20 @@ while not fini:
     temps_maintenant = pygame.time.get_ticks() / 1000
     traiter_evenements()
 
+    # test champignon
+    if not champ and temps_maintenant >= temps_champ:
+        objet.creer_depuis_bloc(CHAMPIGNON, [10, 5], temps_maintenant)
+        champ = True
+        print('CHAMPIGNON')
+    
+    if champ:
+        print(f'champ = {objet.liste_objets[0]}')
+
     mario.mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_touche_direction)
+    objet.mettre_a_jour_toutes_positions(temps_maintenant)
+
     affichage.dessiner_decors(fenetre, niveau, mario.position_camera)
+    affichage.dessiner_objets(fenetre, mario.position_camera)
     affichage.dessiner_mario(fenetre, mario.position_camera)
 
     pygame.display.flip()
