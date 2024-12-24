@@ -72,11 +72,11 @@ RALENTISSEMENT_H     = 10  # bloc / s²
 FREINAGE_H           = 20  # bloc / s²
 TEMPS_MAX_FREINAGE_H = 1   # s
 
-VITESSE_BASE_V       = 6.5 # bloc / s
-VITESSE_COURSE_V     = 7   # bloc / s
-TEMPS_PROLONGER_SAUT = 0.5 # s
+VITESSE_BASE_V       = 9.5 # bloc / s
+VITESSE_COURSE_V     = 10  # bloc / s
+TEMPS_PROLONGER_SAUT = 0.3 # s
 VITESSE_MAX_CHUTE    = 100 # bloc / s
-GRAVITATION          = -20 # bloc / s²
+GRAVITATION          = -35 # bloc / s²
 
 TEMPS_ANIMATION_MARCHE = 200 # ms
 
