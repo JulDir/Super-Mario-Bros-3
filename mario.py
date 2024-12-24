@@ -162,7 +162,6 @@ def gerer_vitesses_H(acceleration, temps_maintenant, bouge, cours):
         vitesse[H] = 0
 
     acceleration[H] = acc * direction
-    print(acceleration)
 
     if vitesse_max == 0:
         if temps_debut_freinage < 0:
@@ -206,7 +205,6 @@ def gerer_sauts(temps_maintenant, saute, cours, niveau):
                 vitesse[V] = VITESSE_COURSE_V
             else:
                 vitesse[V] = VITESSE_BASE_V
-        print(vitesse[V])
     else:
         peut_prolonger_saut = False
 
