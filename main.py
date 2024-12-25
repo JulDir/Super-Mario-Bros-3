@@ -74,16 +74,15 @@ while not fini:
         objet.creer_depuis_bloc(CHAMPIGNON, [10, 5], temps_maintenant)
         champ = True
         print('CHAMPIGNON')
-    
-    if champ:
-        print(f'champ = {objet.liste_objets[0]}')
 
     mario.mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_touche_direction)
     objet.mettre_a_jour_toutes_positions(temps_maintenant)
 
-    affichage.dessiner_decors(fenetre, niveau, mario.position_camera)
-    affichage.dessiner_objets(fenetre, mario.position_camera)
-    affichage.dessiner_mario(fenetre, mario.position_camera)
+    affichage.dessiner_decors(fenetre, niveau)
+    affichage.dessiner_objets_fond(fenetre)
+    affichage.dessiner_blocs(fenetre, niveau)
+    affichage.dessiner_objets(fenetre)
+    affichage.dessiner_mario(fenetre)
 
     pygame.display.flip()
     horloge.tick(FPS)

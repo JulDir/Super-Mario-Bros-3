@@ -1,44 +1,48 @@
 from constantes import *
 
 
-def test_collision_droite_bloc(objet, taille, grille, separe = True, bordure = True):
+def test_collision_droite_bloc(objet, taille, grille, separe = True, bordure = True, test_etendu = True):
     yb, yh = generate_rays_references_y(objet, taille[V])
+    h = TOLERANCE if test_etendu else 0
 
     for y in [yb, objet[V], yh]:
-        if test_touche_droite_bloc((objet[H], y), taille[H]/2 + TOLERANCE, grille, False, bordure):
+        if test_touche_droite_bloc((objet[H], y), taille[H]/2 + h, grille, False, bordure):
             if separe and test_touche_droite_bloc((objet[H], y), taille[H]/2, grille, False, bordure):
                 x_grille_collision = round(objet[H] + taille[H]/2)
                 objet[H] = x_grille_collision - (LARGEUR_BLOC/2 + taille[H]/2)
             return True
     return False
 
-def test_collision_gauche_bloc(objet, taille, grille, separe = True, bordure = True):
+def test_collision_gauche_bloc(objet, taille, grille, separe = True, bordure = True, test_etendu = True):
     yb, yh = generate_rays_references_y(objet, taille[V])
+    h = TOLERANCE if test_etendu else 0
 
     for y in [yb, objet[V], yh]:
-        if test_touche_gauche_bloc((objet[H], y), taille[H]/2 + TOLERANCE, grille, False, bordure):
+        if test_touche_gauche_bloc((objet[H], y), taille[H]/2 + h, grille, False, bordure):
             if separe and test_touche_gauche_bloc((objet[H], y), taille[H]/2, grille, False, bordure):
                 x_grille_collision = round(objet[H] - taille[H]/2)
                 objet[H] = x_grille_collision + (LARGEUR_BLOC/2 + taille[H]/2)
             return True
     return False
 
-def test_collision_haut_bloc(objet, taille, grille, separe = True, bordure = True):
+def test_collision_haut_bloc(objet, taille, grille, separe = True, bordure = True, test_etendu = True):
     xg, xd = generate_rays_references_x(objet, taille[H])
+    h = TOLERANCE if test_etendu else 0
 
     for x in [xg, objet[H], xd]:
-        if test_touche_haut_bloc((x, objet[V]), taille[V] - HAUTEUR_BLOC/2 + TOLERANCE, grille, False, bordure):
+        if test_touche_haut_bloc((x, objet[V]), taille[V] - HAUTEUR_BLOC/2 + h, grille, False, bordure):
             if separe and test_touche_haut_bloc((x, objet[V]), taille[V] - HAUTEUR_BLOC/2, grille, False, bordure):
                 y_grille_collision = round(objet[V] + taille[V] - HAUTEUR_BLOC/2)
                 objet[V] = y_grille_collision - taille[V]
             return True
     return False
 
-def test_collision_bas_bloc(objet, taille, grille, separe = True, bordure = True):
+def test_collision_bas_bloc(objet, taille, grille, separe = True, bordure = True, test_etendu = True):
     xg, xd = generate_rays_references_x(objet, taille[H])
+    h = TOLERANCE if test_etendu else 0
 
     for x in [xg, objet[H], xd]:
-        if test_touche_bas_bloc((x, objet[V]), HAUTEUR_BLOC/2 + TOLERANCE, grille, False, bordure):
+        if test_touche_bas_bloc((x, objet[V]), HAUTEUR_BLOC/2 + h, grille, False, bordure):
             if separe and test_touche_bas_bloc((x, objet[V]), HAUTEUR_BLOC/2, grille, False, bordure):
                 y_grille_collision = round(objet[V] - HAUTEUR_BLOC/2)
                 objet[V] = y_grille_collision + HAUTEUR_BLOC
@@ -49,7 +53,7 @@ def generate_rays_references_x(objet, largeur):
     return objet[H] - 0.75*(largeur/2), objet[H] + 0.75*(largeur/2)
 
 def generate_rays_references_y(objet, hauteur):
-    return objet[V] - (HAUTEUR_BLOC/2) + TOLERANCE, objet[V] + (hauteur - HAUTEUR_BLOC/2) - TOLERANCE
+    return objet[V] - 0.75*(HAUTEUR_BLOC/2), objet[V] + (hauteur - 0.75*HAUTEUR_BLOC/2)
 
 def test_touche_dh_bloc(objet, distance, grille, direction, separe = True, bordure = True):
 

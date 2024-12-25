@@ -19,7 +19,6 @@ def niveau_vers_fenetre(coordonnee, position_camera):
 
     return x_f, y_f
 
-
 def taille_dans_fenetre(taille):
     l, h = taille
     return l * LARGEUR_BLOC_FENETRE, h * HAUTEUR_BLOC_FENETRE
@@ -36,23 +35,31 @@ def rect_fenetre(coordonnee, taille, position_camera):
     return pygame.rect.Rect(coin_f, taille_f)
 
 
-def dessiner_decors(fenetre, niveau, position_camera):
+def dessiner_decors(fenetre, niveau):
     fenetre.fill(niveau.fond)
 
+
+def dessiner_blocs(fenetre, niveau):
     for x in range(niveau.LARGEUR):
         for y in range(niveau.HAUTEUR):
             if niveau.blocs_solides[x][y]:
-                rect = rect_bloc_fenetre((x,y), position_camera)
+                rect = rect_bloc_fenetre((x,y), mario.position_camera)
                 fenetre.blit(brick, rect)
 
 
-def dessiner_mario(fenetre, position_camera):
-    rect = rect_fenetre(mario.position, TAILLE_MARIO[mario.etat], position_camera)
+def dessiner_mario(fenetre):
+    rect = rect_fenetre(mario.position, TAILLE_MARIO[mario.etat], mario.position_camera)
     fenetre.blit(mario.sprite(), rect)
 
 
-def dessiner_objets(fenetre, position_camera):
+def dessiner_objets(fenetre):
     for obj in objet.liste_objets:
-        if obj[CHARGE]:
-            rect = rect_fenetre(obj[POSITION], TAILLE_OBJET[obj[TYPE]], position_camera)
+        if obj[CHARGE] and obj[ACTIF]:
+            rect = rect_fenetre(obj[POSITION], TAILLE_OBJET[obj[TYPE]], mario.position_camera)
+            fenetre.blit(objet.sprite(obj), rect)
+
+def dessiner_objets_fond(fenetre):
+    for obj in objet.liste_objets:
+        if obj[CHARGE] and not obj[ACTIF]:
+            rect = rect_fenetre(obj[POSITION], TAILLE_OBJET[obj[TYPE]], mario.position_camera)
             fenetre.blit(objet.sprite(obj), rect)

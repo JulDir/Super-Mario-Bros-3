@@ -153,12 +153,13 @@ def gerer_vitesses_H(acceleration, temps_maintenant, bouge, cours):
 
     if sens_vitesse(H) != 0 and sens_vitesse(H) != direction:
         acc = FREINAGE_H
-    elif not au_sol:
-        acc = 0
     elif norme_vitesse(H) < vitesse_max:
         acc = ACCELERATION_H
     elif norme_vitesse(H) > vitesse_max:
-        acc = - RALENTISSEMENT_H
+        if au_sol:
+            acc = - RALENTISSEMENT_H
+        else:
+            acc = 0
     else:
         acc = 0
         vitesse[H] = 0
@@ -195,11 +196,13 @@ def gerer_collisions_H(acceleration, niveau):
     test_touche_droite(position, 0, niveau.LARGEUR - 1)
 
 def gerer_sauts(temps_maintenant, saute, cours, niveau):
-    global position, vitesse, au_sol, temps_debut_saut, peut_prolonger_saut
+    global position, vitesse, etat, au_sol, temps_debut_saut, peut_prolonger_saut
     blocs = niveau.blocs_solides
 
     if saute:
-        if au_sol:
+        if au_sol \
+            and not test_collision_gauche_bloc(position, TAILLE_MARIO[etat], blocs, separe=False, test_etendu=False) \
+                and not test_collision_droite_bloc(position, TAILLE_MARIO[etat], blocs, separe=False, test_etendu=False):
             peut_prolonger_saut = True
             temps_debut_saut = temps_maintenant
         if peut_prolonger_saut:

@@ -70,7 +70,6 @@ def mettre_a_jour_position(objet, temps_maintenant, temps_derniere_maj):
         objet[ACTIF] = True
 
     dt = temps_maintenant - temps_derniere_maj
-    print(dt)
     objet[POSITION] += objet[VITESSE] * dt + 0.5 * acceleration * dt**2
 
 
