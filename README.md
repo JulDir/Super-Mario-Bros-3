@@ -5,6 +5,7 @@ Recreation of Super Mario Bros 3 with Pygame for fun
 ## Utilisation
 
 Have Numpy and Pygame installed
+
 Execute main.py at the root of the project
 
 ## Description
