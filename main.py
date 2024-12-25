@@ -76,7 +76,7 @@ while not fini:
         print('CHAMPIGNON')
 
     mario.mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_touche_direction)
-    objet.mettre_a_jour_toutes_positions(temps_maintenant)
+    objet.mettre_a_jour_toutes_positions(temps_maintenant, niveau)
 
     affichage.dessiner_decors(fenetre, niveau)
     affichage.dessiner_objets_fond(fenetre)

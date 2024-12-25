@@ -3,6 +3,7 @@ import math
 import numpy as np
 from constantes import *
 from collisions import *
+from IA import *
 
 ### Variables
 
@@ -36,29 +37,10 @@ def norme_vitesse():
 def norme_vitesse(direction):
     return abs(vitesse[direction])
 
-def sens_vitesse(direction):
-    return np.sign(vitesse[direction])
-
-def sprite_serie():
-    global au_sol
-
-    if direction == VERS_GAUCHE:
-        dir = G
-    else:
-        dir = D
-
-    if not au_sol:
-        return SPRITES_SAUT_PETIT[dir]
-    else:
-        return SPRITES_MARCHE_PETIT[dir]
-
-def sprite():
-    return sprite_serie()[0]
 
 def mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_direction):
     global position, vitesse, temps_derniere_maj, direction, premiere_maj, position_camera, mouvement, au_sol
 
-    print('debut calculs')
     # initialisation
     if premiere_maj:
         initialiser_variables(temps_maintenant)
@@ -87,7 +69,7 @@ def mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_direction
 
     # initialiser acceleration
     acceleration = np.zeros(2)
-    print(f'avant calculs {acceleration, vitesse, position}')
+    #print(f'avant calculs {acceleration, vitesse, position}')
 
     # gestion sauts & deplacements verticaux
     gerer_sauts(temps_maintenant, saute, cours, niveau)
@@ -101,7 +83,7 @@ def mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_direction
     deplacement = vitesse * dt + 0.5 * acceleration * dt**2
     position   += deplacement
     vitesse    += acceleration * dt
-    print(f'après calculs {acceleration, vitesse, position}')
+    #print(f'après calculs {acceleration, vitesse, position}')
 
     # gestion camera
     gerer_scrolling(deplacement, niveau)
@@ -132,7 +114,7 @@ def initialiser_variables(temps_maintenant):
     temps_debut_freinage = -1
 
 
-def position_relative_mario_H():
+def position_relative_camera_H():
     offset = round(position[H] - position_camera[H])
     if offset < LARGEUR_FENETRE_EN_BLOCS / 2:
         return GAUCHE
@@ -151,7 +133,7 @@ def gerer_vitesses_H(acceleration, temps_maintenant, bouge, cours):
     else:
         vitesse_max = 0
 
-    if sens_vitesse(H) != 0 and sens_vitesse(H) != direction:
+    if sens_vitesse(vitesse, H) != 0 and sens_vitesse(vitesse, H) != direction:
         acc = FREINAGE_H
     elif norme_vitesse(H) < vitesse_max:
         acc = ACCELERATION_H
@@ -181,13 +163,13 @@ def gerer_collisions_H(acceleration, niveau):
     blocs = niveau.blocs_solides
 
     if test_collision_droite_bloc(position, TAILLE_MARIO[etat], blocs):
-        print('collision droite')
+        #print('collision droite')
         if vitesse[H] > 0:
             vitesse[H] = 0
         if acceleration[H] > 0:
             acceleration[H] = 0
     if test_collision_gauche_bloc(position, TAILLE_MARIO[etat], blocs):
-        print('collision gauche')
+        #print('collision gauche')
         if vitesse[H] < 0:
             vitesse[H] = 0
         if acceleration[H] < 0:
@@ -238,7 +220,7 @@ def gerer_chutes(acceleration, niveau):
 def gerer_scrolling(deplacement_mario, niveau):
     global direction, position_camera
 
-    pos_relative = position_relative_mario_H()
+    pos_relative = position_relative_camera_H()
     if (direction == VERS_GAUCHE and pos_relative != DROITE) \
         or (direction == VERS_DROITE and pos_relative != GAUCHE):
         position_camera[H] += deplacement_mario[H]
@@ -246,3 +228,21 @@ def gerer_scrolling(deplacement_mario, niveau):
     test_touche_gauche(position_camera, 0, 0)
     test_touche_droite(position_camera, LARGEUR_FENETRE_EN_BLOCS, niveau.LARGEUR)
     test_touche_bas(position_camera, 0, 0)
+
+
+
+def sprite_serie():
+    global au_sol
+
+    if direction == VERS_GAUCHE:
+        dir = G
+    else:
+        dir = D
+
+    if not au_sol:
+        return SPRITES_SAUT_PETIT[dir]
+    else:
+        return SPRITES_MARCHE_PETIT[dir]
+
+def sprite():
+    return sprite_serie()[0]
