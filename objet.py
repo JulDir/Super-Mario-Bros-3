@@ -77,8 +77,12 @@ def mettre_a_jour_position(objet, temps_maintenant, temps_derniere_maj, blocs):
     # initialiser acceleration
     acceleration = np.zeros(2)
 
-    # objet actif (sensibles à la physique)
+    # objet actif (utilisables & sensibles à la physique)
     if objet[ACTIF]:
+        if mario.test_collision(objet[POSITION], TAILLE_OBJET[objet[TYPE]]):
+            mario.ramasse_objet(objet[TYPE])
+            supprimer_objet(objet)
+            return
         gerer_physique(objet, acceleration, blocs)
     # objets inactifs (sortie des blocs, etc.)
     elif objet[DELAI_ACTIVATION] > 0 \

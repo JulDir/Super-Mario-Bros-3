@@ -59,7 +59,7 @@ fini = False
 horloge = pygame.time.Clock()
 
 champ = False
-temps_champ = 5
+temps_champ = 2
 
 niveau = Niveau()
 

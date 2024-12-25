@@ -9,27 +9,9 @@ from IA import *
 
 premiere_maj = True
 
-### Sprites
-
-mario1_     = pygame.image.load('images/mario1.png')
-mario2_     = pygame.image.load('images/mario2.png')
-mario_saute_ = pygame.image.load('images/mario_jump.png')
-
-mario1g      = pygame.transform.scale(mario1_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
-mario2g      = pygame.transform.scale(mario2_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
-mario_sauteg = pygame.transform.scale(mario_saute_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
-
-mario1d      = pygame.transform.flip(mario1g, True, False)
-mario2d      = pygame.transform.flip(mario2g, True, False)
-mario_sauted = pygame.transform.flip(mario_sauteg, True, False)
-
-SPRITES_MARCHE_GAUCHE_PETIT = [mario1g, mario2g]
-SPRITES_MARCHE_DROITE_PETIT = [mario1d, mario2d]
-SPRITES_MARCHE_PETIT = [SPRITES_MARCHE_GAUCHE_PETIT, SPRITES_MARCHE_DROITE_PETIT]
-
-SPRITES_SAUT_PETIT = [[mario_sauteg], [mario_sauted]]
-
 ### Fonctions
+
+# Deplacements
 
 def norme_vitesse():
     return math.sqrt(vitesse[H]**2 + vitesse[V]**2)
@@ -229,10 +211,59 @@ def gerer_scrolling(deplacement_mario, niveau):
     test_touche_droite(position_camera, LARGEUR_FENETRE_EN_BLOCS, niveau.LARGEUR)
     test_touche_bas(position_camera, 0, 0)
 
+# Objets
 
+def test_collision(objet, taille):
+    global position, etat
+    return test_collision_entites(position, TAILLE_MARIO[etat], objet, taille)
+
+def ramasse_objet(objet):
+    global etat
+
+    if objet == CHAMPIGNON and etat == PETIT:
+        etat = GRAND
+    elif objet == FLEUR:
+        etat = FEU
+    elif objet == FEUILLE:
+        etat = TANUKI
+
+### Sprites
+
+mario1_            = pygame.image.load('images/mario1.png')
+mario2_            = pygame.image.load('images/mario2.png')
+mario_saute_       = pygame.image.load('images/mario_saute.png')
+mario_grand1_      = pygame.image.load('images/mario_grand1.png')
+mario_grand_saute_ = pygame.image.load('images/mario_grand_saute.png')
+
+mario1g            = pygame.transform.scale(mario1_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
+mario2g            = pygame.transform.scale(mario2_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
+mario_sauteg       = pygame.transform.scale(mario_saute_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
+mario_grand1g      = pygame.transform.scale(mario_grand1_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[GRAND] * HAUTEUR_BLOC_FENETRE))
+mario_grand_sauteg = pygame.transform.scale(mario_grand_saute_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[GRAND] * HAUTEUR_BLOC_FENETRE))
+
+mario1d            = pygame.transform.flip(mario1g, True, False)
+mario2d            = pygame.transform.flip(mario2g, True, False)
+mario_sauted       = pygame.transform.flip(mario_sauteg, True, False)
+mario_grand1d      = pygame.transform.flip(mario_grand1g, True, False)
+mario_grand_sauted = pygame.transform.flip(mario_grand_sauteg, True, False)
+
+SPRITES_MARCHE_GAUCHE_PETIT = [mario1g, mario2g]
+SPRITES_MARCHE_DROITE_PETIT = [mario1d, mario2d]
+SPRITES_MARCHE_PETIT = [SPRITES_MARCHE_GAUCHE_PETIT, SPRITES_MARCHE_DROITE_PETIT]
+
+SPRITES_MARCHE_GAUCHE_GRAND = [mario_grand1g]
+SPRITES_MARCHE_DROITE_GRAND = [mario_grand1d]
+SPRITES_MARCHE_GRAND = [SPRITES_MARCHE_GAUCHE_GRAND, SPRITES_MARCHE_DROITE_GRAND]
+
+SPRITES_MARCHE = [SPRITES_MARCHE_PETIT, SPRITES_MARCHE_GRAND]
+
+SPRITES_SAUT_PETIT = [[mario_sauteg], [mario_sauted]]
+SPRITES_SAUT_GRAND = [[mario_grand_sauteg], [mario_grand_sauted]]
+
+SPRITES_SAUT = [SPRITES_SAUT_PETIT, SPRITES_SAUT_GRAND]
 
 def sprite_serie():
-    global au_sol
+    global au_sol, etat
 
     if direction == VERS_GAUCHE:
         dir = G
@@ -240,9 +271,9 @@ def sprite_serie():
         dir = D
 
     if not au_sol:
-        return SPRITES_SAUT_PETIT[dir]
+        return SPRITES_SAUT[etat][dir]
     else:
-        return SPRITES_MARCHE_PETIT[dir]
+        return SPRITES_MARCHE[etat][dir]
 
 def sprite():
     return sprite_serie()[0]
