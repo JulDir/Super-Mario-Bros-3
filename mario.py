@@ -74,7 +74,7 @@ def mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_direction
     # gestion sauts & deplacements verticaux
     gerer_sauts(temps_maintenant, saute, cours, niveau)
     gerer_chutes(acceleration, niveau)
-    
+
     # gestion deplacements horizontaux
     gerer_vitesses_H(acceleration, temps_maintenant, bouge, cours)
     gerer_collisions_H(acceleration, niveau)
