@@ -1,4 +1,5 @@
 import pygame
+import time
 import affichage
 import mario
 import objet

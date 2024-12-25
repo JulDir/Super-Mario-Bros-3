@@ -153,6 +153,8 @@ def gerer_vitesses_H(acceleration, temps_maintenant, bouge, cours):
 
     if sens_vitesse(H) != 0 and sens_vitesse(H) != direction:
         acc = FREINAGE_H
+    elif not au_sol:
+        acc = 0
     elif norme_vitesse(H) < vitesse_max:
         acc = ACCELERATION_H
     elif norme_vitesse(H) > vitesse_max:
@@ -163,7 +165,7 @@ def gerer_vitesses_H(acceleration, temps_maintenant, bouge, cours):
 
     acceleration[H] = acc * direction
 
-    if vitesse_max == 0:
+    if vitesse_max == 0 and acc != 0:
         if temps_debut_freinage < 0:
             temps_debut_freinage = temps_maintenant
         elif temps_maintenant - temps_debut_freinage > TEMPS_MAX_FREINAGE_H \
