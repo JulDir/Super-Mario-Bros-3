@@ -1,12 +1,23 @@
 # Super Mario Bros 3
-Recréation de Super Mario Bros 3 avec Pygame pour le fun
+
+Recreation of Super Mario Bros 3 with Pygame for fun
 
 ## Utilisation
 
-Lancer le fichier main.py depuis un terminal ouvers dans la root (avoir numpy et pygame installés est nécéssaire)
+Have Numpy and Pygame installed
+Execute main.py at the root of the project
 
-## Description du projet
+## Description
 
-Ce projet est basé sur le cours "Premier projet d'informatique" de Laurent Mathy pour les 1eres bachelier en sciences informatiques à l'Université de Liège (https://people.montefiore.uliege.be/mathy/ppi/). Les technologies utilisées (Pygame) et limtations (pas de structures, classes, etc) y sont donc les mêmes (je me permet quand même l'utilisation de Numpy).
+This project is based on the course "Premier projet d'informatique" of Laurent Mathy for 1st bachelier in Computer Sciences at University of Liège (https://people.montefiore.uliege.be/mathy/ppi/). Technologies used (Pygame) and restrictions (no structures or classes) are the same than in the course (I still allow myself to use Numpy).
 
-Note: Je n'ai pas suivis le cours et ai juste fait la 1ere partie par curiosité avant de me lancer dans ce projet.
+Note: I didn't take this course and juste read the 1st part before starting this project.
+
+## Progress
+
+- Base moves / physics
+- Mushrooms
+
+## State of the project
+
+Ongoing
