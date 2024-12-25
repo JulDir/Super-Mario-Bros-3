@@ -35,65 +35,68 @@ def direction_V(objet, reference, hauteur_objet=0, hauteur_reference=0):
 
 def rect(position, taille):
     coin = position[H] - taille[H]/2, position[V] + taille[V] - HAUTEUR_BLOC/2
-    print(f'coin = {coin}, taille = {taille}')
     return pygame.rect.Rect(coin, taille)
 
 def test_collision_entites(objet1, taille1, objet2, taille2):
     return rect(objet1, taille1).colliderect(rect(objet2, taille2))
 
 def test_collision_droite_bloc(objet, taille, grille, separe = True, bordure = True, test_etendu = True):
-    yb, yh = generate_rays_references_y(objet, taille[V])
-    h = TOLERANCE if test_etendu else 0
+    y_rays = generate_rays_references_y(objet, taille[V])
+    h = TOLERANCE if test_etendu else -TOLERANCE
 
-    for y in [yb, objet[V], yh]:
+    for y in y_rays:
         if test_touche_droite_bloc((objet[H], y), taille[H]/2 + h, grille, False, bordure):
-            if separe and test_touche_droite_bloc((objet[H], y), taille[H]/2, grille, False, bordure):
+            if separe and (h == 0 or test_touche_droite_bloc((objet[H], y), taille[H]/2, grille, False, bordure)):
                 x_grille_collision = round(objet[H] + taille[H]/2)
                 objet[H] = x_grille_collision - (LARGEUR_BLOC/2 + taille[H]/2)
             return True
     return False
 
 def test_collision_gauche_bloc(objet, taille, grille, separe = True, bordure = True, test_etendu = True):
-    yb, yh = generate_rays_references_y(objet, taille[V])
+    y_rays = generate_rays_references_y(objet, taille[V])
     h = TOLERANCE if test_etendu else 0
 
-    for y in [yb, objet[V], yh]:
+    for y in y_rays:
         if test_touche_gauche_bloc((objet[H], y), taille[H]/2 + h, grille, False, bordure):
-            if separe and test_touche_gauche_bloc((objet[H], y), taille[H]/2, grille, False, bordure):
+            if separe and (h == 0 or test_touche_gauche_bloc((objet[H], y), taille[H]/2, grille, False, bordure)):
                 x_grille_collision = round(objet[H] - taille[H]/2)
                 objet[H] = x_grille_collision + (LARGEUR_BLOC/2 + taille[H]/2)
             return True
     return False
 
 def test_collision_haut_bloc(objet, taille, grille, separe = True, bordure = True, test_etendu = True):
-    xg, xd = generate_rays_references_x(objet, taille[H])
+    x_rays = generate_rays_references_x(objet, taille[H])
     h = TOLERANCE if test_etendu else 0
 
-    for x in [xg, objet[H], xd]:
+    for x in x_rays:
         if test_touche_haut_bloc((x, objet[V]), taille[V] - HAUTEUR_BLOC/2 + h, grille, False, bordure):
-            if separe and test_touche_haut_bloc((x, objet[V]), taille[V] - HAUTEUR_BLOC/2, grille, False, bordure):
+            if separe and (h == 0 or test_touche_haut_bloc((x, objet[V]), taille[V] - HAUTEUR_BLOC/2, grille, False, bordure)):
                 y_grille_collision = round(objet[V] + taille[V] - HAUTEUR_BLOC/2)
                 objet[V] = y_grille_collision - taille[V]
             return True
     return False
 
 def test_collision_bas_bloc(objet, taille, grille, separe = True, bordure = True, test_etendu = True):
-    xg, xd = generate_rays_references_x(objet, taille[H])
+    x_rays = generate_rays_references_x(objet, taille[H])
     h = TOLERANCE if test_etendu else 0
 
-    for x in [xg, objet[H], xd]:
+    for x in x_rays:
         if test_touche_bas_bloc((x, objet[V]), HAUTEUR_BLOC/2 + h, grille, False, bordure):
-            if separe and test_touche_bas_bloc((x, objet[V]), HAUTEUR_BLOC/2, grille, False, bordure):
+            if separe and (h == 0 or test_touche_bas_bloc((x, objet[V]), HAUTEUR_BLOC/2, grille, False, bordure)):
                 y_grille_collision = round(objet[V] - HAUTEUR_BLOC/2)
                 objet[V] = y_grille_collision + HAUTEUR_BLOC
             return True
     return False
 
 def generate_rays_references_x(objet, largeur):
-    return objet[H] - 0.75*(largeur/2), objet[H] + 0.75*(largeur/2)
+    return objet[H] - 0.75*(largeur/2), objet[H], objet[H] + 0.75*(largeur/2)
 
 def generate_rays_references_y(objet, hauteur):
-    return objet[V] - 0.75*(HAUTEUR_BLOC/2), objet[V] + (hauteur - 0.75*HAUTEUR_BLOC/2)
+    yb = objet[V] - 0.75*(HAUTEUR_BLOC/2)
+    yh = objet[V] + (hauteur - 1.25*HAUTEUR_BLOC/2)
+    ym = (yh + yb) / 2
+    return yb, ym, yh
+
 
 def test_touche_dh_bloc(objet, distance, grille, direction, separe = True, bordure = True):
 
@@ -106,6 +109,8 @@ def test_touche_dh_bloc(objet, distance, grille, direction, separe = True, bordu
             if separe:
                 objet[direction] = coordonnees_grille[direction] - (TAILLE_BLOC[direction]/2 + distance)
             return True
+        else:
+            return False
     elif grille[x_g, y_g]:
         if separe:
             objet[direction] = coordonnees_grille[direction] - (TAILLE_BLOC[direction]/2 + distance)
@@ -124,6 +129,8 @@ def test_touche_gb_bloc(objet, distance, grille, direction, separe = True, bordu
             if separe:
                 objet[direction] = coordonnees_grille[direction] + (TAILLE_BLOC[direction]/2 + distance)
             return True
+        else:
+            return False
     elif grille[x_g, y_g]:
         if separe:
             objet[direction] = coordonnees_grille[direction] + (TAILLE_BLOC[direction]/2 + distance)

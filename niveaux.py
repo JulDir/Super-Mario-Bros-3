@@ -14,6 +14,7 @@ class Niveau():
         self.blocs_solides_[10,5] = True
         self.blocs_solides_[11,6] = True
         self.blocs_solides_[14,3:9] = True
+        self.blocs_solides_[18,2:9] = True
 
         self.blocs_solides = np.copy(self.blocs_solides_)
 

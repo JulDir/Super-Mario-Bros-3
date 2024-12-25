@@ -51,21 +51,23 @@ def mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_direction
 
     # initialiser acceleration
     acceleration = np.zeros(2)
-    #print(f'avant calculs {acceleration, vitesse, position}')
+    # print(f'avant calculs {acceleration, vitesse, position}')
+
+    # gestion collisions (avant gérer sauts pour éviter wall jumps)
+    gerer_chute(acceleration, niveau)
+    gerer_collisions_H(acceleration, niveau)
 
     # gestion sauts & deplacements verticaux
     gerer_sauts(temps_maintenant, saute, cours, niveau)
-    gerer_chutes(acceleration, niveau)
-
+    
     # gestion deplacements horizontaux
     gerer_vitesses_H(acceleration, temps_maintenant, bouge, cours)
-    gerer_collisions_H(acceleration, niveau)
 
     # calculs deplacements
     deplacement = vitesse * dt + 0.5 * acceleration * dt**2
     position   += deplacement
     vitesse    += acceleration * dt
-    #print(f'après calculs {acceleration, vitesse, position}')
+    # print(f'après calculs {acceleration, vitesse, position}')
 
     # gestion camera
     gerer_scrolling(deplacement, niveau)
@@ -145,13 +147,13 @@ def gerer_collisions_H(acceleration, niveau):
     blocs = niveau.blocs_solides
 
     if test_collision_droite_bloc(position, TAILLE_MARIO[etat], blocs):
-        #print('collision droite')
+        # print('collision droite')
         if vitesse[H] > 0:
             vitesse[H] = 0
         if acceleration[H] > 0:
             acceleration[H] = 0
     if test_collision_gauche_bloc(position, TAILLE_MARIO[etat], blocs):
-        #print('collision gauche')
+        # print('collision gauche')
         if vitesse[H] < 0:
             vitesse[H] = 0
         if acceleration[H] < 0:
@@ -164,9 +166,7 @@ def gerer_sauts(temps_maintenant, saute, cours, niveau):
     blocs = niveau.blocs_solides
 
     if saute:
-        if au_sol \
-            and not test_collision_gauche_bloc(position, TAILLE_MARIO[etat], blocs, separe=False, test_etendu=False) \
-                and not test_collision_droite_bloc(position, TAILLE_MARIO[etat], blocs, separe=False, test_etendu=False):
+        if au_sol:
             peut_prolonger_saut = True
             temps_debut_saut = temps_maintenant
         if peut_prolonger_saut:
@@ -185,7 +185,7 @@ def gerer_sauts(temps_maintenant, saute, cours, niveau):
     if temps_maintenant - temps_debut_saut > TEMPS_PROLONGER_SAUT:
         peut_prolonger_saut = False
 
-def gerer_chutes(acceleration, niveau):
+def gerer_chute(acceleration, niveau):
     global position, vitesse, mouvement, au_sol
     blocs = niveau.blocs_solides
 
@@ -195,6 +195,7 @@ def gerer_chutes(acceleration, niveau):
         if not (vitesse[V] < 0 and abs(vitesse[V]) >= VITESSE_MAX_CHUTE):
             acceleration[V] = GRAVITATION
     else:
+        # print(f'atterissage: {position}')
         au_sol = True
         if vitesse[V] < 0:
             vitesse[V] = 0

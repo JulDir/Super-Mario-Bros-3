@@ -59,7 +59,7 @@ fini = False
 horloge = pygame.time.Clock()
 
 champ = False
-temps_champ = 2
+temps_champ = 0.5
 
 niveau = Niveau()
 
@@ -73,7 +73,6 @@ while not fini:
     if not champ and temps_maintenant >= temps_champ:
         objet.creer_depuis_bloc(CHAMPIGNON, [10, 5], temps_maintenant)
         champ = True
-        print('CHAMPIGNON')
 
     mario.mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_touche_direction)
     objet.mettre_a_jour_toutes_positions(temps_maintenant, niveau)
