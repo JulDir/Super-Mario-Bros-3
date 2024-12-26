@@ -10,8 +10,8 @@ premiere_iteration = True
 
 # Sprites
 
-piece_      = pygame.image.load('images/piece.png')
-champignon_ = pygame.image.load('images/champignon.png')
+piece_      = pygame.image.load(OBJET_PATH + 'piece.png')
+champignon_ = pygame.image.load(OBJET_PATH + 'champignon.png')
 
 piece      = pygame.transform.scale(piece_, (LARGEUR_PIECE * LARGEUR_BLOC_FENETRE, HAUTEUR_PIECE * HAUTEUR_BLOC_FENETRE))
 champignon = pygame.transform.scale(champignon_, (LARGEUR_CHAMPIGNON * LARGEUR_BLOC_FENETRE, HAUTEUR_CHAMPIGNON * HAUTEUR_BLOC_FENETRE))

@@ -6,7 +6,7 @@ from couleurs import *
 
 ### images
 
-brick_ = pygame.image.load('images/brick.png')
+brick_ = pygame.image.load(BLOC_PATH + 'brick.png')
 brick = pygame.transform.scale(brick_, TAILLE_BLOC_FENETRE)
 
 def niveau_vers_fenetre(coordonnee, position_camera):

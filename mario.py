@@ -230,11 +230,11 @@ def ramasse_objet(objet):
 
 ### Sprites
 
-mario1_            = pygame.image.load('images/mario1.png')
-mario2_            = pygame.image.load('images/mario2.png')
-mario_saute_       = pygame.image.load('images/mario_saute.png')
-mario_grand1_      = pygame.image.load('images/mario_grand1.png')
-mario_grand_saute_ = pygame.image.load('images/mario_grand_saute.png')
+mario1_            = pygame.image.load(MARIO_PATH + 'mario1.png')
+mario2_            = pygame.image.load(MARIO_PATH + 'mario2.png')
+mario_saute_       = pygame.image.load(MARIO_PATH + 'mario_saute.png')
+mario_grand1_      = pygame.image.load(MARIO_PATH + 'mario_grand1.png')
+mario_grand_saute_ = pygame.image.load(MARIO_PATH + 'mario_grand_saute.png')
 
 mario1g            = pygame.transform.scale(mario1_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
 mario2g            = pygame.transform.scale(mario2_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
