@@ -181,6 +181,7 @@ def gerer_sauts(temps_maintenant, saute, cours, niveau):
     if vitesse[V] > 0 and test_collision_haut_bloc(position, TAILLE_MARIO[etat], blocs, bordure=False):
         vitesse[V] = 0
         peut_prolonger_saut = False
+        niveau.frapper_bloc(position, etat)
 
     if temps_maintenant - temps_debut_saut > TEMPS_PROLONGER_SAUT:
         peut_prolonger_saut = False

@@ -56,7 +56,7 @@ def dessiner_decors(fenetre, niveau):
 def dessiner_blocs(fenetre, niveau):
     for x in range(niveau.LARGEUR):
         for y in range(niveau.HAUTEUR):
-            if niveau.blocs_brique[x][y]:
+            if niveau.blocs_briques[x][y]:
                 rect = rect_bloc_fenetre((x,y), mario.position_camera)
                 fenetre.blit(brick, rect)
 
