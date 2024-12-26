@@ -1,6 +1,7 @@
 import pygame
 import mario
 import objet
+from collisions import *
 from constantes import *
 from couleurs import *
 
@@ -38,11 +39,24 @@ def rect_fenetre(coordonnee, taille, position_camera):
 def dessiner_decors(fenetre, niveau):
     fenetre.fill(niveau.fond)
 
+    x, y = mario.position_camera
+    min_x = min(round(x), int(x))
+    min_y = min(round(y), int(y))
+    x, y = mario.position_camera + [LARGEUR_FENETRE_EN_BLOCS, HAUTEUR_FENETRE_EN_BLOCS] + np.array(TAILLE_BLOC)/2
+    max_x = max(round(x), int(x))
+    max_y = max(round(y), int(y))
+
+    for x in range(min_x, max_x):
+        for y in range(min_y, max_y):
+            if niveau.blocs_sol[x,y]:
+                rect = rect_bloc_fenetre((x,y), mario.position_camera)
+                pygame.draw.rect(fenetre, niveau.sol, rect)
+
 
 def dessiner_blocs(fenetre, niveau):
     for x in range(niveau.LARGEUR):
         for y in range(niveau.HAUTEUR):
-            if niveau.blocs_solides[x][y]:
+            if niveau.blocs_brique[x][y]:
                 rect = rect_bloc_fenetre((x,y), mario.position_camera)
                 fenetre.blit(brick, rect)
 

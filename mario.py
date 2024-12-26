@@ -91,7 +91,7 @@ def initialiser_variables(temps_maintenant):
     direction            = VERS_DROITE
     au_sol               = True
     mouvement            = FIXE
-    position_camera      = [0, 0]
+    position_camera      = np.array([0.0, 0.0])
     temps_derniere_maj   = temps_maintenant
     temps_debut_saut     = -1
     peut_prolonger_saut  = True
@@ -200,6 +200,7 @@ def gerer_chute(acceleration, niveau):
         if vitesse[V] < 0:
             vitesse[V] = 0
 
+
 def gerer_scrolling(deplacement_mario, niveau):
     global direction, position_camera
 
@@ -288,4 +289,5 @@ def sprite_serie():
         return SPRITES_MARCHE[etat][dir]
 
 def sprite():
+    # animations TBD
     return sprite_serie()[0]

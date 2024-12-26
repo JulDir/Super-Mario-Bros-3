@@ -69,10 +69,10 @@ while not fini:
     temps_maintenant = pygame.time.get_ticks() / 1000
     traiter_evenements()
 
-    # test champignon
-    if not fleur and temps_maintenant >= temps_fleur:
+    # test objet
+    '''if not fleur and temps_maintenant >= temps_fleur:
         objet.creer_depuis_bloc(FLEUR, [10, 5], temps_maintenant)
-        fleur = True
+        fleur = True'''
 
     mario.mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_touche_direction)
     objet.mettre_a_jour_toutes_positions(temps_maintenant, niveau)

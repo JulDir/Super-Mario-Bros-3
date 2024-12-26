@@ -9,14 +9,15 @@ class Niveau():
         self.HAUTEUR = 30
         self.TAILLE = (self.LARGEUR, self.HAUTEUR)
 
-        self.blocs_solides_ = np.zeros(self.TAILLE).astype(bool)
-        self.blocs_solides_[:,:2] = True
-        self.blocs_solides_[10,5] = True
-        self.blocs_solides_[11,6] = True
-        self.blocs_solides_[14,3:9] = True
-        self.blocs_solides_[18,2:9] = True
+        self.blocs_sol = np.zeros(self.TAILLE).astype(bool)
+        self.blocs_sol[:,:2] = True
+        self.blocs_sol[20:23, :] = False
 
-        self.blocs_solides = np.copy(self.blocs_solides_)
+        self.blocs_brique_ = np.zeros_like(self.blocs_sol).astype(bool)
+        self.blocs_brique_[8:12, 5] = True
+
+        self.blocs_brique = np.copy(self.blocs_brique_)
+        self.blocs_solides = self.blocs_brique | self.blocs_sol
 
         self.fond = BLEU_CLAIR
-        self.sol = VERT_CLAIR
+        self.sol  = VERT_CLAIR

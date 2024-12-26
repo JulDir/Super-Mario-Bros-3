@@ -130,11 +130,20 @@ VITESSE_SORTIE_BLOC_FEUILLE    = HAUTEUR_SORTIE_FEUILLE    / TEMPS_SORTIE_BLOC
 VITESSE_SORTIE_BLOC = [VITESSE_SORTIE_BLOC_PIECE, VITESSE_SORTIE_BLOC_CHAMPIGNON, VITESSE_SORTIE_BLOC_FLEUR, VITESSE_SORTIE_BLOC_FEUILLE]
 
 
-# blocs / collisions
+# blocs
 
 LARGEUR_BLOC = 1 # en blocs
 HAUTEUR_BLOC = 1
 TAILLE_BLOC = (LARGEUR_BLOC, HAUTEUR_BLOC)
+
+BLOC_SOL       = 0
+BLOC_BRIQUE    = 1
+BLOC_VIDE      = 2 # bloc brun quand brique/? frappé
+BLOC_MYSTERE   = 3 # bloc ? jaune
+BLOC_BOIS      = 4 # bloc présent dans smb3, peut avoir objet/pousser joueur
+BLOC_NOTE      = 5 # CEBLOCDEMERDECODÉAVECLECUL
+
+# collisions
 
 TOLERANCE = 1e-3
 

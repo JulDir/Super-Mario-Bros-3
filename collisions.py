@@ -2,6 +2,11 @@ import numpy as np
 from constantes import *
 
 
+def est_dans_ecran(objet, taille, position_camera):
+    x_centre_camera = position_camera[H] + LARGEUR_FENETRE_EN_BLOCS / 2
+    return test_collision_entites(objet, taille, (x_centre_camera, position_camera[V]), (LARGEUR_FENETRE_EN_BLOCS, HAUTEUR_FENETRE_EN_BLOCS))
+
+
 def sens_vitesse(vitesse, direction):
     return np.sign(vitesse[direction])
 
