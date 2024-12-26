@@ -8,14 +8,6 @@ from IA import *
 
 premiere_iteration = True
 
-# Sprites
-
-piece_      = pygame.image.load(OBJET_PATH + 'piece.png')
-champignon_ = pygame.image.load(OBJET_PATH + 'champignon.png')
-
-piece      = pygame.transform.scale(piece_, (LARGEUR_PIECE * LARGEUR_BLOC_FENETRE, HAUTEUR_PIECE * HAUTEUR_BLOC_FENETRE))
-champignon = pygame.transform.scale(champignon_, (LARGEUR_CHAMPIGNON * LARGEUR_BLOC_FENETRE, HAUTEUR_CHAMPIGNON * HAUTEUR_BLOC_FENETRE))
-
 # Fonctions
 
 def initialiser_objets(temps_maintenant):
@@ -124,9 +116,29 @@ def gerer_physique(objet, acceleration, blocs):
         objet[VITESSE][H] = - objet[VITESSE][H]
 
 
+# Sprites
+
+piece_      = pygame.image.load(OBJET_PATH + 'piece.png')
+champignon_ = pygame.image.load(OBJET_PATH + 'champignon.png')
+fleur_      = pygame.image.load(OBJET_PATH + 'fleur.png')
+feuille_    = pygame.image.load(OBJET_PATH + 'feuille.png')
+
+piece      = pygame.transform.scale(piece_, (LARGEUR_PIECE * LARGEUR_BLOC_FENETRE, HAUTEUR_PIECE * HAUTEUR_BLOC_FENETRE))
+champignon = pygame.transform.scale(champignon_, (LARGEUR_CHAMPIGNON * LARGEUR_BLOC_FENETRE, HAUTEUR_CHAMPIGNON * HAUTEUR_BLOC_FENETRE))
+fleur      = pygame.transform.scale(fleur_, (LARGEUR_FLEUR * LARGEUR_BLOC_FENETRE, HAUTEUR_FLEUR * HAUTEUR_BLOC_FENETRE))
+feuille    = pygame.transform.scale(feuille_, (LARGEUR_FEUILLE * LARGEUR_BLOC_FENETRE, HAUTEUR_FEUILLE * HAUTEUR_BLOC_FENETRE))
+
 def sprite(objet):
 
-    if objet[TYPE] == PIECE:
+    type = objet[TYPE]
+
+    if type == PIECE:
         return piece
-    elif objet[TYPE] == CHAMPIGNON:
+    elif type == CHAMPIGNON:
         return champignon
+    elif type == FLEUR:
+        return fleur
+    elif type == FEUILLE:
+        return feuille
+    else:
+        print('sprite 404')

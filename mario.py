@@ -230,38 +230,49 @@ def ramasse_objet(objet):
 
 ### Sprites
 
-mario1_            = pygame.image.load(MARIO_PATH + 'mario1.png')
-mario2_            = pygame.image.load(MARIO_PATH + 'mario2.png')
-mario_saute_       = pygame.image.load(MARIO_PATH + 'mario_saute.png')
-mario_grand1_      = pygame.image.load(MARIO_PATH + 'mario_grand1.png')
-mario_grand_saute_ = pygame.image.load(MARIO_PATH + 'mario_grand_saute.png')
+mario_       = pygame.image.load(MARIO_PATH + 'mario.png')
+marche1_     = pygame.image.load(MARIO_PATH + 'marche1.png')
+saute_       = pygame.image.load(MARIO_PATH + 'saute.png')
+grand_       = pygame.image.load(MARIO_PATH + 'grand.png')
+grand_saute_ = pygame.image.load(MARIO_PATH + 'grand_saute.png')
+feu_         = pygame.image.load(MARIO_PATH + 'feu.png')
+feu_saute_   = pygame.image.load(MARIO_PATH + 'feu_saute.png')
 
-mario1g            = pygame.transform.scale(mario1_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
-mario2g            = pygame.transform.scale(mario2_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
-mario_sauteg       = pygame.transform.scale(mario_saute_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
-mario_grand1g      = pygame.transform.scale(mario_grand1_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[GRAND] * HAUTEUR_BLOC_FENETRE))
-mario_grand_sauteg = pygame.transform.scale(mario_grand_saute_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[GRAND] * HAUTEUR_BLOC_FENETRE))
+mario_g       = pygame.transform.scale(mario_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
+marche1_g     = pygame.transform.scale(marche1_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
+saute_g       = pygame.transform.scale(saute_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[PETIT] * HAUTEUR_BLOC_FENETRE))
+grand_g       = pygame.transform.scale(grand_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[GRAND] * HAUTEUR_BLOC_FENETRE))
+grand_saute_g = pygame.transform.scale(grand_saute_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[GRAND] * HAUTEUR_BLOC_FENETRE))
+feu_g         = pygame.transform.scale(feu_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[FEU] * HAUTEUR_BLOC_FENETRE))
+feu_saute_g   = pygame.transform.scale(feu_saute_, (LARGEUR_MARIO * LARGEUR_BLOC_FENETRE, HAUTEUR_MARIO[FEU] * HAUTEUR_BLOC_FENETRE))
 
-mario1d            = pygame.transform.flip(mario1g, True, False)
-mario2d            = pygame.transform.flip(mario2g, True, False)
-mario_sauted       = pygame.transform.flip(mario_sauteg, True, False)
-mario_grand1d      = pygame.transform.flip(mario_grand1g, True, False)
-mario_grand_sauted = pygame.transform.flip(mario_grand_sauteg, True, False)
+mario_d       = pygame.transform.flip(mario_g, True, False)
+marche1_d     = pygame.transform.flip(marche1_g, True, False)
+saute_d       = pygame.transform.flip(saute_g, True, False)
+grand_d       = pygame.transform.flip(grand_g, True, False)
+grand_saute_d = pygame.transform.flip(grand_saute_g, True, False)
+feu_d         = pygame.transform.flip(feu_g, True, False)
+feu_saute_d   = pygame.transform.flip(feu_saute_g, True, False)
 
-SPRITES_MARCHE_GAUCHE_PETIT = [mario1g, mario2g]
-SPRITES_MARCHE_DROITE_PETIT = [mario1d, mario2d]
+SPRITES_MARCHE_GAUCHE_PETIT = [mario_g, marche1_g]
+SPRITES_MARCHE_DROITE_PETIT = [mario_d, marche1_d]
 SPRITES_MARCHE_PETIT = [SPRITES_MARCHE_GAUCHE_PETIT, SPRITES_MARCHE_DROITE_PETIT]
 
-SPRITES_MARCHE_GAUCHE_GRAND = [mario_grand1g]
-SPRITES_MARCHE_DROITE_GRAND = [mario_grand1d]
+SPRITES_MARCHE_GAUCHE_GRAND = [grand_g]
+SPRITES_MARCHE_DROITE_GRAND = [grand_d]
 SPRITES_MARCHE_GRAND = [SPRITES_MARCHE_GAUCHE_GRAND, SPRITES_MARCHE_DROITE_GRAND]
 
-SPRITES_MARCHE = [SPRITES_MARCHE_PETIT, SPRITES_MARCHE_GRAND]
+SPRITES_MARCHE_GAUCHE_FEU = [feu_g]
+SPRITES_MARCHE_DROITE_FEU = [feu_d]
+SPRITES_MARCHE_FEU = [SPRITES_MARCHE_GAUCHE_FEU, SPRITES_MARCHE_DROITE_FEU]
 
-SPRITES_SAUT_PETIT = [[mario_sauteg], [mario_sauted]]
-SPRITES_SAUT_GRAND = [[mario_grand_sauteg], [mario_grand_sauted]]
+SPRITES_MARCHE = [SPRITES_MARCHE_PETIT, SPRITES_MARCHE_GRAND, SPRITES_MARCHE_FEU]
 
-SPRITES_SAUT = [SPRITES_SAUT_PETIT, SPRITES_SAUT_GRAND]
+SPRITES_SAUT_PETIT = [[saute_g], [saute_d]]
+SPRITES_SAUT_GRAND = [[grand_saute_g], [grand_saute_d]]
+SPRITES_SAUT_FEU   = [[feu_saute_g], [feu_saute_d]]
+
+SPRITES_SAUT = [SPRITES_SAUT_PETIT, SPRITES_SAUT_GRAND, SPRITES_SAUT_FEU]
 
 def sprite_serie():
     global au_sol, etat

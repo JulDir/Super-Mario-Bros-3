@@ -58,8 +58,8 @@ fenetre = pygame.display.set_mode(affichage.TAILLE_FENETRE)
 fini = False
 horloge = pygame.time.Clock()
 
-champ = False
-temps_champ = 0.5
+fleur = False
+temps_fleur = 0.5
 
 niveau = Niveau()
 
@@ -70,9 +70,9 @@ while not fini:
     traiter_evenements()
 
     # test champignon
-    if not champ and temps_maintenant >= temps_champ:
-        objet.creer_depuis_bloc(CHAMPIGNON, [10, 5], temps_maintenant)
-        champ = True
+    if not fleur and temps_maintenant >= temps_fleur:
+        objet.creer_depuis_bloc(FLEUR, [10, 5], temps_maintenant)
+        fleur = True
 
     mario.mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_touche_direction)
     objet.mettre_a_jour_toutes_positions(temps_maintenant, niveau)
