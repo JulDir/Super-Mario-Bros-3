@@ -129,19 +129,19 @@ VITESSE_SORTIE_BLOC_FLEUR      = HAUTEUR_SORTIE_FLEUR      / TEMPS_SORTIE_BLOC
 VITESSE_SORTIE_BLOC_FEUILLE    = HAUTEUR_SORTIE_FEUILLE    / TEMPS_SORTIE_BLOC
 VITESSE_SORTIE_BLOC = [VITESSE_SORTIE_BLOC_PIECE, VITESSE_SORTIE_BLOC_CHAMPIGNON, VITESSE_SORTIE_BLOC_FLEUR, VITESSE_SORTIE_BLOC_FEUILLE]
 
-
 # blocs
 
 LARGEUR_BLOC = 1 # en blocs
 HAUTEUR_BLOC = 1
 TAILLE_BLOC = (LARGEUR_BLOC, HAUTEUR_BLOC)
 
-BLOC_SOL       = 0
-BLOC_BRIQUE    = 1
-BLOC_VIDE      = 2 # bloc brun quand brique/? frappé
-BLOC_MYSTERE   = 3 # bloc ? jaune
-BLOC_BOIS      = 4 # bloc présent dans smb3, peut avoir objet/pousser joueur
-BLOC_NOTE      = 5 # CEBLOCDEMERDECODÉAVECLECUL
+BLOC_AIR       = 0
+BLOC_SOL       = 1
+BLOC_BRIQUE    = 2
+BLOC_VIDE      = 3 # bloc brun quand brique/? frappé
+BLOC_MYSTERE   = 4 # bloc ? jaune
+BLOC_BOIS      = 5 # bloc présent dans smb3, peut avoir objet/pousser joueur
+BLOC_NOTE      = 6 # CEBLOCDEMERDECODÉAVECLECUL
 
 # collisions
 
@@ -171,6 +171,13 @@ HAUTEUR_FENETRE_EN_BLOCS = HAUTEUR_FENETRE // HAUTEUR_BLOC_FENETRE
 
 G = 0
 D = 1
+
+# Decors
+
+PLAINE  = 0
+CAVERNE = 1
+CIEL    = 2
+CHATEAU = 3
 
 # Sprites
 

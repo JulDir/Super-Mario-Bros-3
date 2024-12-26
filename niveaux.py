@@ -4,6 +4,18 @@ from constantes import *
 from couleurs import *
 
 
+def creer_niveau(sol, blocs, ennemis, decors=PLAINE):
+    taille = sol.shape
+    if taille != blocs.shape or taille != ennemis.shape:
+        print("taille incompatible")
+        return
+    niveau = [
+        blocs,
+        ennemis,
+        decors
+    ]
+    return niveau
+
 class Niveau():
     # classe temporaire pour les tests
 
