@@ -1,6 +1,7 @@
 import numpy as np
 from constantes import *
 import mario
+import niveaux
 from collisions import *
 from IA import *
 
@@ -18,10 +19,10 @@ def initialiser_objets(temps_maintenant):
     temps_derniere_maj = temps_maintenant
 
 
-def creer_objet(type, position, vitesse, temps_maintenant, charge=False, actif=False, delai_activation=1, delai_disparition=-1):
+def creer_objet(type, position, vitesse, temps_maintenant, actif=False, delai_activation=1, delai_disparition=-1):
     global liste_objets
 
-    objet = [type, position, vitesse, temps_maintenant, charge, actif, delai_activation, delai_disparition]
+    objet = [type, position, vitesse, temps_maintenant, actif, delai_activation, delai_disparition]
     liste_objets.append(objet)
 
 def creer_depuis_bloc(type, position_bloc, temps_maintenant):
@@ -30,7 +31,6 @@ def creer_depuis_bloc(type, position_bloc, temps_maintenant):
         position=np.array(position_bloc, dtype=float),
         vitesse=np.array([0, VITESSE_SORTIE_BLOC[type]]),
         temps_maintenant=temps_maintenant,
-        charge=True,
         delai_activation=TEMPS_SORTIE_BLOC
         )
 
@@ -46,7 +46,7 @@ def mettre_a_jour_toutes_positions(temps_maintenant, niveau):
         initialiser_objets(temps_maintenant)
         return
 
-    blocs = niveau.blocs_solides
+    blocs = niveaux.blocs(niveau)
     for objet in liste_objets:
         mettre_a_jour_position(objet, temps_maintenant, temps_derniere_maj, blocs)
     
@@ -63,15 +63,15 @@ def mettre_a_jour_position(objet, temps_maintenant, temps_derniere_maj, blocs):
         return
 
     # si objet pas chargé (charger/decharger items TBD)
-    if not objet[CHARGE]:
-        return
+    '''if not objet[CHARGE]:
+        return'''
 
     # initialiser acceleration
     acceleration = np.zeros(2)
 
     # objet actif (utilisables & sensibles à la physique)
     if objet[ACTIF]:
-        if mario.test_collision(objet[POSITION], TAILLE_OBJET[objet[TYPE]]):
+        if mario.test_collision(objet[POSITION], taille_objet(objet[TYPE])):
             mario.ramasse_objet(objet[TYPE])
             supprimer_objet(objet)
             return
@@ -90,13 +90,19 @@ def mettre_a_jour_position(objet, temps_maintenant, temps_derniere_maj, blocs):
 def activer(objet):
     objet[ACTIF] = True
 
-    objet[VITESSE][H] = direction_H(objet[POSITION][H], mario.position[H]) * VITESSE_OBJET[objet[TYPE]]
+    objet[VITESSE][H] = direction_H(objet[POSITION][H], mario.position[H]) * vitesse_objet(objet[TYPE])
 
+
+def vitesse_objet(type):
+    return VITESSE_OBJET[type-1]
+
+def taille_objet(type):
+    return TAILLE_OBJET[type-1]
 
 def gerer_physique(objet, acceleration, blocs):
 
     # si touche sol
-    if test_collision_bas_bloc(objet[POSITION], TAILLE_OBJET[objet[TYPE]], blocs, bordure=False):
+    if test_collision_bas_bloc(objet[POSITION], taille_objet(objet[TYPE]), blocs, bordure=False):
         au_sol = True
     else:
         au_sol = False
@@ -110,35 +116,7 @@ def gerer_physique(objet, acceleration, blocs):
 
     # collision gauche/droite
     if (sens_vitesse(objet[VITESSE], H) == VERS_GAUCHE \
-        and test_collision_gauche_bloc(objet[POSITION], TAILLE_OBJET[objet[TYPE]], blocs, bordure=False)) \
+        and test_collision_gauche_bloc(objet[POSITION], taille_objet(objet[TYPE]), blocs, bordure=False)) \
             or (sens_vitesse(objet[VITESSE], H) == VERS_DROITE \
-                and test_collision_droite_bloc(objet[POSITION], TAILLE_OBJET[objet[TYPE]], blocs, bordure=False)):
+                and test_collision_droite_bloc(objet[POSITION], taille_objet(objet[TYPE]), blocs, bordure=False)):
         objet[VITESSE][H] = - objet[VITESSE][H]
-
-
-# Sprites
-
-piece_      = pygame.image.load(OBJET_PATH + 'piece.png')
-champignon_ = pygame.image.load(OBJET_PATH + 'champignon.png')
-fleur_      = pygame.image.load(OBJET_PATH + 'fleur.png')
-feuille_    = pygame.image.load(OBJET_PATH + 'feuille.png')
-
-piece      = pygame.transform.scale(piece_, (LARGEUR_PIECE * LARGEUR_BLOC_FENETRE, HAUTEUR_PIECE * HAUTEUR_BLOC_FENETRE))
-champignon = pygame.transform.scale(champignon_, (LARGEUR_CHAMPIGNON * LARGEUR_BLOC_FENETRE, HAUTEUR_CHAMPIGNON * HAUTEUR_BLOC_FENETRE))
-fleur      = pygame.transform.scale(fleur_, (LARGEUR_FLEUR * LARGEUR_BLOC_FENETRE, HAUTEUR_FLEUR * HAUTEUR_BLOC_FENETRE))
-feuille    = pygame.transform.scale(feuille_, (LARGEUR_FEUILLE * LARGEUR_BLOC_FENETRE, HAUTEUR_FEUILLE * HAUTEUR_BLOC_FENETRE))
-
-def sprite(objet):
-
-    type = objet[TYPE]
-
-    if type == PIECE:
-        return piece
-    elif type == CHAMPIGNON:
-        return champignon
-    elif type == FLEUR:
-        return fleur
-    elif type == FEUILLE:
-        return feuille
-    else:
-        print('sprite 404')

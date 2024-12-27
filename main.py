@@ -1,9 +1,10 @@
 import pygame
+import numpy as np
 import time
 import affichage
 import mario
 import objet
-from niveaux import Niveau
+from niveaux import creer_niveau
 from constantes import *
 
 ### Variables
@@ -61,18 +62,18 @@ horloge = pygame.time.Clock()
 champi = False
 temps_champi = 0.5
 
-niveau = Niveau()
+blocs = np.zeros((40, 20), dtype = int)
+blocs[:, :2] = BLOC_SOL
+blocs[8:12, 5] = BLOC_BRIQUE
+objets = np.zeros_like(blocs)
+objets[10,5] = CHAMPIGNON
+niveau = creer_niveau(blocs, entites=objets)
 
 #--- Boucle principale
 while not fini:
 
     temps_maintenant = pygame.time.get_ticks() / 1000
     traiter_evenements()
-
-    # test objet
-    if not champi and temps_maintenant >= temps_champi:
-        objet.creer_depuis_bloc(CHAMPIGNON, [8,5], temps_maintenant)
-        champi = True
 
     mario.mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_touche_direction)
     objet.mettre_a_jour_toutes_positions(temps_maintenant, niveau)

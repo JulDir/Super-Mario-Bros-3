@@ -1,6 +1,7 @@
 import pygame
 import math
 import numpy as np
+import niveaux
 from constantes import *
 from collisions import *
 from IA import *
@@ -142,9 +143,10 @@ def gerer_vitesses_H(acceleration, temps_maintenant, bouge, cours):
             temps_debut_freinage = -1
     else: temps_debut_freinage = -1
 
+
 def gerer_collisions_H(acceleration, niveau):
     global position, vitesse
-    blocs = niveau.blocs_solides
+    blocs = niveaux.blocs(niveau)
 
     if test_collision_droite_bloc(position, TAILLE_MARIO[etat], blocs):
         # print('collision droite')
@@ -159,11 +161,11 @@ def gerer_collisions_H(acceleration, niveau):
         if acceleration[H] < 0:
             acceleration[H] = 0
     test_touche_gauche(position, 0, 0)
-    test_touche_droite(position, 0, niveau.LARGEUR - 1)
+    test_touche_droite(position, 0, blocs.shape[H])
 
 def gerer_sauts(temps_maintenant, saute, cours, niveau):
     global position, vitesse, etat, au_sol, temps_debut_saut, peut_prolonger_saut
-    blocs = niveau.blocs_solides
+    blocs = niveaux.blocs(niveau)
 
     if saute:
         if au_sol:
@@ -181,14 +183,15 @@ def gerer_sauts(temps_maintenant, saute, cours, niveau):
     if vitesse[V] > 0 and test_collision_haut_bloc(position, TAILLE_MARIO[etat], blocs, bordure=False):
         vitesse[V] = 0
         peut_prolonger_saut = False
-        niveau.frapper_bloc(position, etat)
+        niveaux.frapper_bloc(niveau, position, etat, temps_maintenant)
 
     if temps_maintenant - temps_debut_saut > TEMPS_PROLONGER_SAUT:
         peut_prolonger_saut = False
 
+
 def gerer_chute(acceleration, niveau):
     global position, vitesse, mouvement, au_sol
-    blocs = niveau.blocs_solides
+    blocs = niveaux.blocs(niveau)
 
     if not test_collision_bas_bloc(position, TAILLE_MARIO[etat], blocs, bordure=False):
         mouvement = SAUTE
@@ -211,7 +214,7 @@ def gerer_scrolling(deplacement_mario, niveau):
         position_camera[H] += deplacement_mario[H]
 
     test_touche_gauche(position_camera, 0, 0)
-    test_touche_droite(position_camera, LARGEUR_FENETRE_EN_BLOCS, niveau.LARGEUR)
+    test_touche_droite(position_camera, LARGEUR_FENETRE_EN_BLOCS, niveaux.taille(niveau)[H])
     test_touche_bas(position_camera, 0, 0)
 
 # Objets

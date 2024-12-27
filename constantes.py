@@ -1,6 +1,6 @@
 import pygame
 
-# controles / parametres
+### controles / parametres
 
 FPS = 50
 
@@ -21,7 +21,7 @@ APPUIE_BAS    = 3
 APPUIE_SAUT   = 4
 APPUIE_COURSE = 5
 
-# mario
+### mario
 
 NB_FORMES = 8
 
@@ -44,6 +44,7 @@ SUPER_TANUKI  = 4
 TANUKI_PIERRE = 5
 MARTEAU       = 6
 GRENOUILLE    = 7
+BOTTE         = 8
 
 RIEN           = 0
 CARAPACE_VERTE = 1
@@ -57,13 +58,12 @@ DIRECTION_BASE = VERS_DROITE
 
 FIXE     = 0
 MARCHE   = 1
-COURS    = 2
-SAUTE    = 3
-FREINE   = 4
-VOLE     = 5
-NAGE     = 6
+SAUTE    = 2
+FREINE   = 3
+VOLE     = 4
+NAGE     = 5
 
-# mouvements
+### mouvements
 
 VITESSE_MARCHE_H     = 4   # bloc / s
 VITESSE_COURSE_H     = 10  # bloc / s
@@ -80,21 +80,20 @@ GRAVITATION          = -25 # bloc / s²
 
 TEMPS_ANIMATION_MARCHE = 200 # ms
 
-# objets / power-ups
+### objets / power-ups
 
 TYPE              = 0
 POSITION          = 1
 VITESSE           = 2
 MOMENT_APPARITION = 3
-CHARGE            = 4
-ACTIF             = 5
-DELAI_ACTIVATION  = 6
-DELAI_DISPARITION = 7
+ACTIF             = 4
+DELAI_ACTIVATION  = 5
+DELAI_DISPARITION = 6
 
-PIECE      = 0
-CHAMPIGNON = 1
-FLEUR      = 2
-FEUILLE    = 3
+PIECE      = 1
+CHAMPIGNON = 2
+FLEUR      = 3
+FEUILLE    = 4
 
 LARGEUR_PIECE      = 1
 HAUTEUR_PIECE      = 1
@@ -129,13 +128,110 @@ VITESSE_SORTIE_BLOC_FLEUR      = HAUTEUR_SORTIE_FLEUR      / TEMPS_SORTIE_BLOC
 VITESSE_SORTIE_BLOC_FEUILLE    = HAUTEUR_SORTIE_FEUILLE    / TEMPS_SORTIE_BLOC
 VITESSE_SORTIE_BLOC = [VITESSE_SORTIE_BLOC_PIECE, VITESSE_SORTIE_BLOC_CHAMPIGNON, VITESSE_SORTIE_BLOC_FLEUR, VITESSE_SORTIE_BLOC_FEUILLE]
 
-# blocs
+### ennemis
+
+GOOMBA      = -1
+PARAGOOMBA  = -2
+PARAGOOMBA2 = -3 # celui qui drop des mini goombas
+MINIGOOMBA  = -4
+GOOMBLOC    = -5
+MAXI_GOOMBA = -6
+GOOMBOTTE   = -7
+
+KOOPA_VERT          = -10
+PARAKOOPA_VERT      = -11
+MAXI_KOOPA_VERT     = -12
+MAXI_PARAKOOPA_VERT = -13
+
+KOOPA_ROUGE          = -20
+PARAKOOPA_ROUGE      = -21
+MAXI_KOOPA_ROUGE     = -12
+MAXI_PARAKOOPA_ROUGE = -13
+
+PLANTE_PIRANHA = -30
+PYRO_PIRANHA   = -31
+PTOOIE         = -32 # boule à piques
+PTOOIE_FIXE    = -33 # tuyau
+SCROUNCH       = -34 # noirs invincibles
+NIPPER         = -35 # blancs qui sautent
+MAXI_PIRANHA   = -36
+
+LAKITU  = -40
+LAKITU2 = -41 # boules qui roulent au lieu de heriss
+
+HERISS      = -50
+OEUF_HERISS = -51
+
+BRUYINSECTE         = -60
+PARABRUYINSECTE     = -61
+BRUYINSECTE_PORTEUR = -62 # ceux qui lancent des blocs
+
+FRERE_MARTEAU   = -70
+FRERE_MASTOC    = -71 # gros frere marteau
+FRERE_BOOMERANG = -72
+FRERE_PYRO      = -73
+
+CHEEP_CHEEP_ROUGE = -80
+CHEEP_CHEEP_VERT  = -81
+CHEEP_CHEEP_BLEU  = -82
+BEBE_CHEEP        = -83
+BIG_BERTHA        = -84 # lance bébé cheep cheep
+CHEEP_CHOMP       = -85
+
+BLOUPS        = -90
+BEBE_BLOUPS   = -91
+NOUNOU_BLOOPS = -92
+
+LAVA_LOTUS = -100
+
+PODOBOO       = -110 # boule de feu
+SERPENTFLAMME = -101
+
+BILL_BALLE   = -110
+BILL_BOUM    = -111 # canons
+CANON        = -112
+BOULET       = -113
+LANCE_FLAMME = -114
+
+SPIKE      = -120
+
+TORTI_TAUPE = -130
+
+CHOMP      = -140
+PYRO_CHOMP = -141 # ceux qui volent
+
+BOO      = -150
+LAFLAMME = -151
+FLEXIBLE = -152 # boos plateforme
+
+SKELEREX = -160
+
+THWOMP = -170
+
+SOLEIL = - 180
+
+ROTODISQUE  = -190 # boule qui tourne
+ROTODISQUE2 = -191 # 2 boules
+
+STATUE_BOWSER = -200
+
+BOUM_BOUM = -210
+LARRY     = -211
+MORTON    = -212
+WENDY     = -213
+IGGY      = -214
+ROY       = -215
+LEMMY     = -216
+LUDWING   = -217
+BOWSER    = -218
+
+### blocs
 
 LARGEUR_BLOC = 1 # en blocs
 HAUTEUR_BLOC = 1
 TAILLE_BLOC = (LARGEUR_BLOC, HAUTEUR_BLOC)
 
-BLOC_AIR       = 0
+BLOC_AIR       = 0 # rien
 BLOC_SOL       = 1
 BLOC_BRIQUE    = 2
 BLOC_VIDE      = 3 # bloc brun quand brique/? frappé
@@ -143,7 +239,15 @@ BLOC_MYSTERE   = 4 # bloc ? jaune
 BLOC_BOIS      = 5 # bloc présent dans smb3, peut avoir objet/pousser joueur
 BLOC_NOTE      = 6 # CEBLOCDEMERDECODÉAVECLECUL
 
-# collisions
+### Niveaux
+
+BLOCS       = 0
+PLATEFORMES = 1 # mobile et/ou traversables
+ENTITES     = 2 # objets + ennemis
+DECORS      = 3
+BACKUP      = 4 # pour recharger zones (recup blocs, etc)
+
+### collisions
 
 TOLERANCE = 1e-3
 
@@ -157,7 +261,7 @@ BAS            = 8
 BAS_GAUCHE     = 9
 BAS_DROITE     = 10
 
-# affichage
+### affichage
 
 LARGEUR_FENETRE = 800
 HAUTEUR_FENETRE = 600
