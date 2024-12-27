@@ -18,6 +18,8 @@ Note: I followed every labo but only the 1st half of PPI before starting this pr
 
 - Base moves / physics
 - Mushrooms
+- Break bricks
+- Activate bricks with items inside
 
 ## State of the project
 
