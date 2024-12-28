@@ -12,14 +12,24 @@ Execute main.py at the root of the project
 
 This project is based on the course "Premier projet d'informatique" of Laurent Mathy (https://people.montefiore.uliege.be/mathy/ppi/) and "Laboratoires de programmation mathématique et physique" of Bernard Boigelot (https://people.montefiore.uliege.be/boigelot/cours/labmp/index.html) for 1st bachelier in Computer Sciences at University of Liège. Technologies used (Pygame) and restrictions (no structures or classes) are the same than in the course (I still allow myself to use Numpy).
 
-Note: I followed every labo but only the 1st half of PPI before starting this project.
+Note: I'm a student in a // curriculum to CS (so didn't have these courses). I did every lab but only the 1st half of PPI before starting this project.
 
 ## Progress
 
-- Base moves / physics
-- Mushrooms
-- Break bricks
-- Activate bricks with items inside
+### Moves / Physics
+- Basics
+- Running
+- Inertia effect
+
+### Terrain
+- Bricks (breakable or containing item)
+
+### Power-ups
+- Mushroom (change size and can break bricks)
+- Fire Flower (only graphics)
+
+### Ennemies
+/
 
 ## State of the project
 
