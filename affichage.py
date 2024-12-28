@@ -69,7 +69,7 @@ def dessiner_blocs(fenetre, niveau):
 
 def dessiner_mario(fenetre):
     rect = rect_fenetre(mario.position, TAILLE_MARIO[mario.etat], mario.position_camera)
-    fenetre.blit(mario.sprite(), rect)
+    fenetre.blit(sprites.mario(), rect)
 
 
 def dessiner_objets(fenetre):
