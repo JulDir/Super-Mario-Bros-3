@@ -65,6 +65,7 @@ def trouver_bloc(niveau, position_mario, etat_mario):
 def frapper_bloc(niveau, position_mario, etat_mario, temps_maintenant):
     est_frappables = blocs_frappables(niveau)
     est_brique  = briques(niveau)
+    est_mystere = blocs_mysteres(niveau)
 
     x_b, y_b = trouver_bloc(niveau, position_mario, etat_mario)
     if not est_frappables[x_b, y_b]:
@@ -72,8 +73,13 @@ def frapper_bloc(niveau, position_mario, etat_mario, temps_maintenant):
 
     if niveau[ENTITES][x_b, y_b] != 0:
         # objet dans bloc
-        objet.creer_depuis_bloc(niveau[ENTITES][x_b, y_b], (x_b, y_b), temps_maintenant)
+        obj = niveau[ENTITES][x_b, y_b]
+        if obj in [FLEUR, FEUILLE] and etat_mario == PETIT:
+            obj = CHAMPIGNON
+        objet.creer_depuis_bloc(obj, (x_b, y_b), temps_maintenant)
         niveau[BLOCS][x_b, y_b] = BLOC_VIDE
+    elif est_mystere[x_b, y_b]:
+        pass
     elif est_brique[x_b, y_b] and etat_mario != PETIT:
         # casser brique
         niveau[BLOCS][x_b, y_b] = BLOC_AIR

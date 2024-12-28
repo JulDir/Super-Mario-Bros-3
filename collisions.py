@@ -4,7 +4,7 @@ from constantes import *
 
 def est_dans_ecran(objet, taille, position_camera):
     x_centre_camera = position_camera[H] + LARGEUR_FENETRE_EN_BLOCS / 2
-    return test_collision_entites(objet, taille, (x_centre_camera, position_camera[V]), (LARGEUR_FENETRE_EN_BLOCS, HAUTEUR_FENETRE_EN_BLOCS))
+    return test_collision_rect_entites(objet, taille, (x_centre_camera, position_camera[V]), (LARGEUR_FENETRE_EN_BLOCS, HAUTEUR_FENETRE_EN_BLOCS))
 
 
 def sens_vitesse(vitesse, direction):
@@ -38,12 +38,8 @@ def direction_V(objet, reference, hauteur_objet=0, hauteur_reference=0):
     rel = position_relative_V(objet, hauteur_objet, reference, hauteur_reference)
     return VERS_HAUT if rel == HAUT else VERS_BAS
 
-def rect(position, taille):
-    coin = position[H] - taille[H]/2, position[V] + taille[V] - HAUTEUR_BLOC/2
-    return pygame.rect.Rect(coin, taille)
-
-def test_collision_entites(objet1, taille1, objet2, taille2):
-    return rect(objet1, taille1).colliderect(rect(objet2, taille2))
+def test_collision_rect_entites(objet1, taille1, objet2, taille2):
+    return position_relative(objet1, taille1, objet2, taille2) == CENTRE
 
 def test_collision_droite_bloc(objet, taille, grille, separe = True, bordure = True, test_etendu = True):
     y_rays = generate_rays_references_y(objet, taille[V])

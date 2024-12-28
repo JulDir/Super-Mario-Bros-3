@@ -59,14 +59,12 @@ fenetre = pygame.display.set_mode(affichage.TAILLE_FENETRE)
 fini = False
 horloge = pygame.time.Clock()
 
-champi = False
-temps_champi = 0.5
-
 blocs = np.zeros((40, 20), dtype = int)
 blocs[:, :2] = BLOC_SOL
 blocs[8:12, 5] = BLOC_BRIQUE
 objets = np.zeros_like(blocs)
-objets[10,5] = CHAMPIGNON
+objets[10,5] = FLEUR
+objets[9, 5] = FLEUR
 niveau = creer_niveau(blocs, entites=objets)
 
 #--- Boucle principale

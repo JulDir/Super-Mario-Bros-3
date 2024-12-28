@@ -29,10 +29,13 @@ def creer_depuis_bloc(type, position_bloc, temps_maintenant):
     creer_objet(
         type=type,
         position=np.array(position_bloc, dtype=float),
-        vitesse=np.array([0, VITESSE_SORTIE_BLOC[type]]),
+        vitesse=np.array([0, vitesse_sortie_bloc(type)]),
         temps_maintenant=temps_maintenant,
         delai_activation=TEMPS_SORTIE_BLOC
         )
+
+def vitesse_sortie_bloc(type):
+    return VITESSE_SORTIE_BLOC[type-1]
 
 def supprimer_objet(objet):
     global liste_objets
@@ -49,7 +52,7 @@ def mettre_a_jour_toutes_positions(temps_maintenant, niveau):
     blocs = niveaux.blocs(niveau)
     for objet in liste_objets:
         mettre_a_jour_position(objet, temps_maintenant, temps_derniere_maj, blocs)
-    
+
     temps_derniere_maj = temps_maintenant
 
 
@@ -63,8 +66,7 @@ def mettre_a_jour_position(objet, temps_maintenant, temps_derniere_maj, blocs):
         return
 
     # si objet pas chargé (charger/decharger items TBD)
-    '''if not objet[CHARGE]:
-        return'''
+
 
     # initialiser acceleration
     acceleration = np.zeros(2)
@@ -89,7 +91,6 @@ def mettre_a_jour_position(objet, temps_maintenant, temps_derniere_maj, blocs):
 
 def activer(objet):
     objet[ACTIF] = True
-
     objet[VITESSE][H] = direction_H(objet[POSITION][H], mario.position[H]) * vitesse_objet(objet[TYPE])
 
 

@@ -221,7 +221,7 @@ def gerer_scrolling(deplacement_mario, niveau):
 
 def test_collision(objet, taille):
     global position, etat
-    return test_collision_entites(position, TAILLE_MARIO[etat], objet, taille)
+    return test_collision_rect_entites(position, TAILLE_MARIO[etat], objet, taille)
 
 def ramasse_objet(objet):
     global etat
