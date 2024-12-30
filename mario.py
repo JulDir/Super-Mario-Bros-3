@@ -9,6 +9,7 @@ from IA import *
 ### Variables
 
 premiere_maj = True
+en_vie = True
 
 ### Fonctions
 
@@ -79,7 +80,7 @@ def mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_direction
 def initialiser_variables(temps_maintenant):
     global premiere_maj, position, vitesse, direction, etat, vies, objet_tenu, \
         mouvement, position_camera, au_sol, temps_derniere_maj, temps_debut_saut, \
-            peut_prolonger_saut, temps_debut_freinage
+            peut_prolonger_saut, temps_debut_freinage, en_vie
 
     position             = np.array([8.0, 10.0])
     vitesse              = np.array([0.0, 0.0])
@@ -97,6 +98,7 @@ def initialiser_variables(temps_maintenant):
     temps_debut_saut     = -1
     peut_prolonger_saut  = True
     temps_debut_freinage = -1
+    en_vie               = True
 
 
 def position_relative_camera_H():
@@ -163,6 +165,11 @@ def gerer_collisions_H(acceleration, niveau):
     test_touche_gauche(position, 0, 0)
     test_touche_droite(position, 0, blocs.shape[H])
 
+    # tomber dans trou
+    if test_touche_bas(position, -HAUTEUR_MARIO[etat], 0, False):
+        prend_degats(True)
+
+
 def gerer_sauts(temps_maintenant, saute, cours, niveau):
     global position, vitesse, etat, au_sol, temps_debut_saut, peut_prolonger_saut
     blocs = niveaux.blocs(niveau)
@@ -217,7 +224,17 @@ def gerer_scrolling(deplacement_mario, niveau):
     test_touche_droite(position_camera, LARGEUR_FENETRE_EN_BLOCS, niveaux.taille(niveau)[H])
     test_touche_bas(position_camera, 0, 0)
 
-# Objets
+
+# Interactions
+
+def prend_degats(mortel=False):
+    global etat, en_vie
+    if mortel or etat == PETIT:
+        en_vie = False
+    elif etat == GRAND:
+        etat = PETIT
+    else:
+        etat = GRAND
 
 def test_collision(objet, taille):
     global position, etat

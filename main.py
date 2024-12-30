@@ -62,13 +62,14 @@ horloge = pygame.time.Clock()
 blocs = np.zeros((40, 20), dtype = int)
 blocs[:, :2] = BLOC_SOL
 blocs[8:12, 5] = BLOC_BRIQUE
+blocs[20:23, :2] =  BLOC_AIR
 objets = np.zeros_like(blocs)
 objets[10,5] = FLEUR
 objets[9, 5] = FLEUR
 niveau = creer_niveau(blocs, entites=objets)
 
 #--- Boucle principale
-while not fini:
+while mario.en_vie:
 
     temps_maintenant = pygame.time.get_ticks() / 1000
     traiter_evenements()
