@@ -64,10 +64,10 @@ blocs = np.zeros((40, 20), dtype = int)
 blocs[:, :2] = BLOC_SOL
 blocs[8:12, 5] = BLOC_BRIQUE
 blocs[20:23, :2] =  BLOC_AIR
-objets = np.zeros_like(blocs)
-objets[10,5] = FLEUR
-objets[9, 5] = FLEUR
-niveau = creer_niveau(blocs, entites=objets)
+obj = np.zeros_like(blocs)
+obj[10,5] = FLEUR
+obj[9, 5] = FLEUR
+niveau = creer_niveau(blocs, entites=obj)
 
 #--- Boucle principale
 while not fini:
@@ -76,7 +76,7 @@ while not fini:
     traiter_evenements()
 
     mario.mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_touche_direction)
-    objets.mettre_a_jour_toutes_positions(temps_maintenant, niveau, mario.position, mario.position_camera)
+    objets.mettre_a_jour_toutes_positions(temps_maintenant, niveau)
 
     if not mario.en_vie:
         break
