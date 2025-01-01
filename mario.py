@@ -4,7 +4,6 @@ import numpy as np
 import niveaux
 from constantes import *
 from collisions import *
-from IA import *
 
 ### Variables
 
