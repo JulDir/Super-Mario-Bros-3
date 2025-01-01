@@ -24,6 +24,7 @@ def traiter_evenements():
 
 
 def traiter_touche(touche, type):
+    global derniere_touche_direction
     appuie = type == pygame.KEYDOWN
 
     if touche == TOUCHE_GAUCHE:
@@ -69,13 +70,16 @@ objets[9, 5] = FLEUR
 niveau = creer_niveau(blocs, entites=objets)
 
 #--- Boucle principale
-while mario.en_vie:
+while not fini:
 
     temps_maintenant = pygame.time.get_ticks() / 1000
     traiter_evenements()
 
     mario.mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_touche_direction)
     objet.mettre_a_jour_toutes_positions(temps_maintenant, niveau)
+
+    if not mario.en_vie:
+        break
 
     affichage.dessiner_decors(fenetre, niveau)
     affichage.dessiner_objets_fond(fenetre)

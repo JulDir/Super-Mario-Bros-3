@@ -2,9 +2,13 @@ import numpy as np
 from constantes import *
 
 
-def est_dans_ecran(objet, taille, position_camera):
-    x_centre_camera = position_camera[H] + LARGEUR_FENETRE_EN_BLOCS / 2
-    return test_collision_rect_entites(objet, taille, (x_centre_camera, position_camera[V]), (LARGEUR_FENETRE_EN_BLOCS, HAUTEUR_FENETRE_EN_BLOCS))
+def est_charge(objet, taille, position_camera):
+    centre_camera = position_camera[H] + LARGEUR_FENETRE_EN_BLOCS / 2
+
+    return position_relative_H(objet[H], taille[H], centre_camera,
+                               LARGEUR_FENETRE_EN_BLOCS * (1 + TOLERANCE_SORTIE_ECRAN)
+                               ) == CENTRE \
+        and not test_touche_bas(objet, - taille[V], 0, False)
 
 
 def sens_vitesse(vitesse, direction):
@@ -14,7 +18,7 @@ def position_relative(objet, taille_objet, reference, taille_reference):
     return position_relative_H(objet[H], taille_objet[H], reference[H], taille_reference[H]) \
         + position_relative_V(objet[V], taille_objet[V], reference[V], taille_reference[V])
 
-def position_relative_H(objet, largeur_objet, reference, largeur_reference):
+def position_relative_H(objet, largeur_objet, reference, largeur_reference=0):
     if objet + largeur_objet/2 < reference - largeur_reference/2:
         return GAUCHE
     elif objet - largeur_objet/2 > reference + largeur_reference/2:

@@ -261,6 +261,8 @@ BAS            = 8
 BAS_GAUCHE     = 9
 BAS_DROITE     = 10
 
+TOLERANCE_SORTIE_ECRAN = 0.3  # fois l'écran
+
 ### affichage
 
 LARGEUR_FENETRE = 800

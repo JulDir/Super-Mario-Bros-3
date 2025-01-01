@@ -166,7 +166,7 @@ def gerer_collisions_H(acceleration, niveau):
     test_touche_droite(position, 0, blocs.shape[H])
 
     # tomber dans trou
-    if test_touche_bas(position, -HAUTEUR_MARIO[etat], 0, False):
+    if test_touche_bas(position, - HAUTEUR_MARIO[etat], 0, False):
         prend_degats(True)
 
 

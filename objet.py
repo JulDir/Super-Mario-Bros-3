@@ -65,15 +65,17 @@ def mettre_a_jour_position(objet, temps_maintenant, temps_derniere_maj, blocs):
         supprimer_objet(objet)
         return
 
-    # si objet pas chargé (charger/decharger items TBD)
-
+    # si objet sort écran
+    if not est_charge(objet[POSITION], taille_objet(objet), mario.position_camera):
+        supprimer_objet(objet)
+        return
 
     # initialiser acceleration
     acceleration = np.zeros(2)
 
     # objet actif (utilisables & sensibles à la physique)
     if objet[ACTIF]:
-        if mario.test_collision(objet[POSITION], taille_objet(objet[TYPE])):
+        if mario.test_collision(objet[POSITION], taille_objet(objet)):
             mario.ramasse_objet(objet[TYPE])
             supprimer_objet(objet)
             return
@@ -97,13 +99,13 @@ def activer(objet):
 def vitesse_objet(type):
     return VITESSE_OBJET[type-1]
 
-def taille_objet(type):
-    return TAILLE_OBJET[type-1]
+def taille_objet(objet):
+    return TAILLE_OBJET[objet[TYPE]-1]
 
 def gerer_physique(objet, acceleration, blocs):
 
     # si touche sol
-    if test_collision_bas_bloc(objet[POSITION], taille_objet(objet[TYPE]), blocs, bordure=False):
+    if test_collision_bas_bloc(objet[POSITION], taille_objet(objet), blocs, bordure=False):
         au_sol = True
     else:
         au_sol = False
@@ -117,7 +119,7 @@ def gerer_physique(objet, acceleration, blocs):
 
     # collision gauche/droite
     if (sens_vitesse(objet[VITESSE], H) == VERS_GAUCHE \
-        and test_collision_gauche_bloc(objet[POSITION], taille_objet(objet[TYPE]), blocs, bordure=False)) \
+        and test_collision_gauche_bloc(objet[POSITION], taille_objet(objet), blocs, bordure=False)) \
             or (sens_vitesse(objet[VITESSE], H) == VERS_DROITE \
-                and test_collision_droite_bloc(objet[POSITION], taille_objet(objet[TYPE]), blocs, bordure=False)):
+                and test_collision_droite_bloc(objet[POSITION], taille_objet(objet), blocs, bordure=False)):
         objet[VITESSE][H] = - objet[VITESSE][H]
