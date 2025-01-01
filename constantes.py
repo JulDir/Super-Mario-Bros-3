@@ -86,9 +86,9 @@ TYPE              = 0
 POSITION          = 1
 VITESSE           = 2
 MOMENT_APPARITION = 3
-ACTIF             = 4
-DELAI_ACTIVATION  = 5
-DELAI_DISPARITION = 6
+DELAI_DISPARITION = 4
+ACTIF             = 5
+DELAI_ACTIVATION  = 6
 
 PIECE      = 1
 CHAMPIGNON = 2
@@ -130,9 +130,17 @@ VITESSE_SORTIE_BLOC = [VITESSE_SORTIE_BLOC_PIECE, VITESSE_SORTIE_BLOC_CHAMPIGNON
 
 ### ennemis
 
+# 0-4 idem objets
+ETAT_ACTUEL      = 5  # infos supplémentaires nécéssaires (# HP, propriétés actives, etc)
+POINT_APPARITION = 6  # recharger ennemi si sorti écran
+
+TYPE_APPARITION    = 0
+VITESSE_APPARITION = 1
+ENNEMI_EN_VIE      = 2
+
 GOOMBA      = -1
 PARAGOOMBA  = -2
-PARAGOOMBA2 = -3 # celui qui drop des mini goombas
+PARAGOOMBA2 = -3  # celui qui drop des mini goombas
 MINIGOOMBA  = -4
 GOOMBLOC    = -5
 MAXI_GOOMBA = -6
@@ -261,7 +269,7 @@ BAS            = 8
 BAS_GAUCHE     = 9
 BAS_DROITE     = 10
 
-TOLERANCE_SORTIE_ECRAN = 0.3  # fois l'écran
+TOLERANCE_SORTIE_ECRAN = 0.25  # fois l'écran
 
 ### affichage
 

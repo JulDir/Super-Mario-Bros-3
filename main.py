@@ -76,7 +76,7 @@ while not fini:
     traiter_evenements()
 
     mario.mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_touche_direction)
-    objets.mettre_a_jour_toutes_positions(temps_maintenant, niveau)
+    objets.mettre_a_jour_toutes_positions(temps_maintenant, niveau, mario.position, mario.position_camera)
 
     if not mario.en_vie:
         break

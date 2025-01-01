@@ -18,23 +18,32 @@ def initialiser_objets(temps_maintenant):
     temps_derniere_maj = temps_maintenant
 
 
-def creer_objet(type, position, vitesse, temps_maintenant, actif=False, delai_activation=1, delai_disparition=-1):
+def creer_objet(type, position, vitesse, temps_maintenant, delai_disparition=-1, actif=False, delai_activation=1):
     global liste_objets
 
-    objet = [type, position, vitesse, temps_maintenant, actif, delai_activation, delai_disparition]
+    objet = [
+        type,
+        np.array(position, dtype=float),
+        np.array(vitesse, dtype=float),
+        temps_maintenant,
+        delai_disparition,
+        actif,
+        delai_activation
+        ]
     liste_objets.append(objet)
 
 def creer_depuis_bloc(type, position_bloc, temps_maintenant):
     creer_objet(
         type=type,
-        position=np.array(position_bloc, dtype=float),
-        vitesse=np.array([0, vitesse_sortie_bloc(type)]),
+        position=position_bloc,
+        vitesse=[0, vitesse_sortie_bloc(type)],
         temps_maintenant=temps_maintenant,
         delai_activation=TEMPS_SORTIE_BLOC
         )
 
 def vitesse_sortie_bloc(type):
     return VITESSE_SORTIE_BLOC[type-1]
+
 
 def supprimer_objet(objet):
     global liste_objets

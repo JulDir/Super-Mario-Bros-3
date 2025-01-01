@@ -2,6 +2,7 @@ import numpy as np
 from constantes import *
 
 
+# positions par rapport écran
 def est_charge(objet, taille, position_camera):
     centre_camera = position_camera[H] + LARGEUR_FENETRE_EN_BLOCS / 2
 
@@ -11,12 +12,22 @@ def est_charge(objet, taille, position_camera):
         and not test_touche_bas(objet, - taille[V], 0, False)
 
 
+def est_dans_ecran(objet, taille, position_camera):
+    centre_camera = position_camera[H] + LARGEUR_FENETRE_EN_BLOCS / 2
+
+    return position_relative_H(objet[H], taille[H], centre_camera, LARGEUR_FENETRE_EN_BLOCS) == CENTRE \
+        and not test_touche_bas(objet, - taille[V], 0, False)
+
+
 def sens_vitesse(vitesse, direction):
     return np.sign(vitesse[direction])
 
+
+# positions relatives
 def position_relative(objet, taille_objet, reference, taille_reference):
     return position_relative_H(objet[H], taille_objet[H], reference[H], taille_reference[H]) \
         + position_relative_V(objet[V], taille_objet[V], reference[V], taille_reference[V])
+
 
 def position_relative_H(objet, largeur_objet, reference, largeur_reference=0):
     if objet + largeur_objet/2 < reference - largeur_reference/2:
@@ -26,6 +37,7 @@ def position_relative_H(objet, largeur_objet, reference, largeur_reference=0):
     else:
         return CENTRE
 
+
 def position_relative_V(objet, hauteur_objet, reference, hauteur_reference):
     if objet + hauteur_objet < reference:            # - HAUTEUR_BLOC/2 des 2 cotés
         return BAS
@@ -34,17 +46,22 @@ def position_relative_V(objet, hauteur_objet, reference, hauteur_reference):
     else:
         return CENTRE
 
+
 def direction_H(objet, reference, largeur_objet=0, largeur_reference=0):
     rel = position_relative_H(objet, largeur_objet, reference, largeur_reference)
     return VERS_DROITE if rel == DROITE else VERS_GAUCHE
+
 
 def direction_V(objet, reference, hauteur_objet=0, hauteur_reference=0):
     rel = position_relative_V(objet, hauteur_objet, reference, hauteur_reference)
     return VERS_HAUT if rel == HAUT else VERS_BAS
 
+
 def test_collision_rect_entites(objet1, taille1, objet2, taille2):
     return position_relative(objet1, taille1, objet2, taille2) == CENTRE
 
+
+# tests collisions blocs
 def test_collision_droite_bloc(objet, taille, grille, separe = True, bordure = True, test_etendu = True):
     y_rays = generate_rays_references_y(objet, taille[V])
     h = TOLERANCE if test_etendu else -TOLERANCE
@@ -56,6 +73,7 @@ def test_collision_droite_bloc(objet, taille, grille, separe = True, bordure = T
                 objet[H] = x_grille_collision - (LARGEUR_BLOC/2 + taille[H]/2)
             return True
     return False
+
 
 def test_collision_gauche_bloc(objet, taille, grille, separe = True, bordure = True, test_etendu = True):
     y_rays = generate_rays_references_y(objet, taille[V])
@@ -69,6 +87,7 @@ def test_collision_gauche_bloc(objet, taille, grille, separe = True, bordure = T
             return True
     return False
 
+
 def test_collision_haut_bloc(objet, taille, grille, separe = True, bordure = True, test_etendu = True):
     x_rays = generate_rays_references_x(objet, taille[H])
     h = TOLERANCE if test_etendu else 0
@@ -80,6 +99,7 @@ def test_collision_haut_bloc(objet, taille, grille, separe = True, bordure = Tru
                 objet[V] = y_grille_collision - taille[V]
             return True
     return False
+
 
 def test_collision_bas_bloc(objet, taille, grille, separe = True, bordure = True, test_etendu = True):
     x_rays = generate_rays_references_x(objet, taille[H])
@@ -93,9 +113,12 @@ def test_collision_bas_bloc(objet, taille, grille, separe = True, bordure = True
             return True
     return False
 
+
 def generate_rays_references_x(objet, largeur):
     return objet[H] - 0.75*(largeur/2), objet[H], objet[H] + 0.75*(largeur/2)
 
+
+# tests touche bloc
 def generate_rays_references_y(objet, hauteur):
     yb = objet[V] - 0.75*(HAUTEUR_BLOC/2)
     yh = objet[V] + (hauteur - 1.25*HAUTEUR_BLOC/2)
@@ -123,6 +146,7 @@ def test_touche_dh_bloc(objet, distance, grille, direction, separe = True, bordu
     else:
         return False
 
+
 def test_touche_gb_bloc(objet, distance, grille, direction, separe = True, bordure = True):
 
     coordonnees_grille = [round(objet[H]), round(objet[V])]
@@ -143,19 +167,24 @@ def test_touche_gb_bloc(objet, distance, grille, direction, separe = True, bordu
     else:
         return False
 
+
 def test_touche_gauche_bloc(objet, largeur_gauche, grille, separe = True, bordure = True):
     return test_touche_gb_bloc(objet, largeur_gauche, grille, H, separe, bordure)
+
 
 def test_touche_droite_bloc(objet, largeur_droite, grille, separe = True, bordure = True):
     return test_touche_dh_bloc(objet, largeur_droite, grille, H, separe, bordure)
 
+
 def test_touche_haut_bloc(objet, hauteur_haut, grille, separe = True, bordure = True):
     return test_touche_dh_bloc(objet, hauteur_haut, grille, V, separe, bordure)
+
 
 def test_touche_bas_bloc(objet, hauteur_bas, grille, separe = True, bordure = True):
     return test_touche_gb_bloc(objet, hauteur_bas, grille, V, separe, bordure)
 
 
+# tests touche
 def test_touche_dh(objet, distance, point, direction, separe):
     if objet[direction] + distance >= point:
         if separe:
@@ -163,6 +192,7 @@ def test_touche_dh(objet, distance, point, direction, separe):
         return True
     else:
         return False
+
 
 def test_touche_gb(objet, distance, point, direction, separe):
     if objet[direction] - distance <= point:
@@ -172,14 +202,18 @@ def test_touche_gb(objet, distance, point, direction, separe):
     else:
         return False
 
+
 def test_touche_droite(objet, largeur_droite, point_droit, separe=True):
     return test_touche_dh(objet, largeur_droite, point_droit, H, separe)
+
 
 def test_touche_gauche(objet, largeur_gauche, point_gauche, separe=True):
     return test_touche_gb(objet, largeur_gauche, point_gauche, H, separe)
 
+
 def test_touche_haut(objet, hauteur_haut, point_haut, separe=True):
     return test_touche_dh(objet, hauteur_haut, point_haut, V, separe)
+
 
 def test_touche_bas(objet, hauteur_bas, point_bas, separe=True):
     return test_touche_gb(objet, hauteur_bas, point_bas, V, separe)
