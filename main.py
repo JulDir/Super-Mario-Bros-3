@@ -3,7 +3,7 @@ import numpy as np
 import time
 import affichage
 import mario
-import objet
+import objets
 from niveaux import creer_niveau
 from constantes import *
 
@@ -76,7 +76,7 @@ while not fini:
     traiter_evenements()
 
     mario.mettre_a_jour_position(touches, niveau, temps_maintenant, derniere_touche_direction)
-    objet.mettre_a_jour_toutes_positions(temps_maintenant, niveau)
+    objets.mettre_a_jour_toutes_positions(temps_maintenant, niveau)
 
     if not mario.en_vie:
         break

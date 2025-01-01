@@ -1,6 +1,6 @@
 import pygame
 import mario
-import objet
+import objets
 import sprites
 import niveaux
 from collisions import *
@@ -73,13 +73,13 @@ def dessiner_mario(fenetre):
 
 
 def dessiner_objets(fenetre):
-    for obj in objet.liste_objets:
+    for obj in objets.liste_objets:
         if obj[ACTIF]:
             rect = rect_fenetre(obj[POSITION], TAILLE_OBJET[obj[TYPE]], mario.position_camera)
             fenetre.blit(sprites.objet(obj[TYPE]), rect)
 
 def dessiner_objets_fond(fenetre):
-    for obj in objet.liste_objets:
+    for obj in objets.liste_objets:
         if not obj[ACTIF]:
             rect = rect_fenetre(obj[POSITION], TAILLE_OBJET[obj[TYPE]], mario.position_camera)
             fenetre.blit(sprites.objet(obj[TYPE]), rect)

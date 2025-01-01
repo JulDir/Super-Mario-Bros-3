@@ -3,7 +3,6 @@ from constantes import *
 import mario
 import niveaux
 from collisions import *
-from IA import *
 
 # Variables
 

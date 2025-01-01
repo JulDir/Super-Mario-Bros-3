@@ -1,5 +1,5 @@
 import numpy as np
-import objet
+import objets
 from collisions import *
 from constantes import *
 from couleurs import *
@@ -76,7 +76,7 @@ def frapper_bloc(niveau, position_mario, etat_mario, temps_maintenant):
         obj = niveau[ENTITES][x_b, y_b]
         if obj in [FLEUR, FEUILLE] and etat_mario == PETIT:
             obj = CHAMPIGNON
-        objet.creer_depuis_bloc(obj, (x_b, y_b), temps_maintenant)
+        objets.creer_depuis_bloc(obj, (x_b, y_b), temps_maintenant)
         niveau[BLOCS][x_b, y_b] = BLOC_VIDE
     elif est_mystere[x_b, y_b]:
         pass
