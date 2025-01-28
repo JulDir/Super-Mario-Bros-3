@@ -33,4 +33,4 @@ Note: I'm a student in a // curriculum to CS (so didn't have these courses). I d
 
 ## State of the project
 
-Temporary on hold during the exams
+Taking a break
